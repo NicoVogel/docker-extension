@@ -2,15 +2,16 @@
   "name": "docker_extension",
   "version": "0.0.1",
   "description": "extend docker command line",
+  "main": "doc.js",
   "preferGlobal": true,
   "bin": {
-    "doc": "./dist/index.js"
+    "doc": "./dist/doc.js"
   },
   "scripts": {
     "build": "tsc -b tsconfig.json",
-    "start": "npm run build -- -w",
+    "start": "nodemon --exec ts-node -- src/doc.ts",
     "test": "",
-    "install": "npm i -g ./"
+    "link": "npm run build && npm install -g"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,9 @@
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
     "eslint": "^6.1.0",
+    "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
+    "ts-node": "^8.3.0",
     "typescript": "^3.5.3"
   }
 }
