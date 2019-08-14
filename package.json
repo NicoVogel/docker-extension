@@ -1,12 +1,16 @@
 {
   "name": "docker_extension",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "extend docker command line",
-  "main": "index.ts",
+  "preferGlobal": true,
+  "bin": {
+    "doc": "./dist/index.js"
+  },
   "scripts": {
-    "build": "tsc -p ./src",
+    "build": "tsc -b tsconfig.json",
     "start": "npm run build -- -w",
-    "test": ""
+    "test": "",
+    "install": "npm i -g ./"
   },
   "repository": {
     "type": "git",
