@@ -24,6 +24,8 @@
     "inquirer": "^6.5.1"
   },
   "devDependencies": {
+    "@types/colors": "^1.2.1",
+    "@types/commander": "^2.12.2",
     "@types/inquirer": "^6.5.0",
     "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
