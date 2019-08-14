@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/NicoVogel/docker_extension/issues"
   },
-  "homepage": "https://github.com/NicoVogel/docker_extension#readme"
+  "homepage": "https://github.com/NicoVogel/docker_extension#readme",
+  "dependencies": {
+    "inquirer": "^6.5.1"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.1",
+    "@typescript-eslint/eslint-plugin": "^2.0.0",
+    "@typescript-eslint/parser": "^2.0.0",
+    "eslint": "^6.1.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.5.3"
+  }
 }
