@@ -19,9 +19,12 @@
   },
   "homepage": "https://github.com/NicoVogel/docker_extension#readme",
   "dependencies": {
+    "colors": "^1.3.3",
+    "commander": "^3.0.0",
     "inquirer": "^6.5.1"
   },
   "devDependencies": {
+    "@types/inquirer": "^6.5.0",
     "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
