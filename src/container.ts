@@ -9,9 +9,13 @@ export const setupContainerCommands = (
 	program
 		.command('ps')
 		.description('list available images')
-		.action(() => {
-			docker.command('ps').then(function(data: ContainerCommand) {
-				console.log(data.raw);
-			});
+		.option('-a, --all', 'show all container')
+		.option('-q, --quiet', 'show only the container IDs')
+		.action((options: any) => {
+			docker
+				.command(`ps ${options.all ? '-a' : ''} ${options.quiet ? '-q' : ''} `)
+				.then(function(data: ContainerCommand) {
+					console.log(data.raw);
+				});
 		});
 };
