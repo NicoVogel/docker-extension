@@ -1,23 +1,16 @@
 #!/usr/bin/env node
 
-import { spawn } from 'child_process';
 import * as program from 'commander';
+import { Docker, Options } from 'docker-cli-js';
+import { setupImageCommands } from './images';
+import { setupContainerCommands } from './container';
+
+const options = new Options(undefined, __dirname);
+const docker = new Docker(options);
 
 program.version('0.0.1');
-program
-	.command('images')
-	.alias('i')
-	.description('equivalent to "docker images"')
-	.action(() => {
-		const dockerImages = spawn('docker', ['images']);
-		let output = '';
-		dockerImages.stdout.on('data', data => {
-			output = `${output}${data}`;
-		});
-		dockerImages.on('close', () => {
-			console.log(output);
-		});
-	});
+setupImageCommands(program, docker);
+setupContainerCommands(program, docker);
 
 // allow commander to parse `process.argv`
 program.parse(process.argv);
