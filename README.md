@@ -1,5 +1,7 @@
 # docker-extension
 
+[![Build Status](https://travis-ci.org/NicoVogel/docker-extension.svg?branch=master)](https://travis-ci.org/NicoVogel/docker-extension)
+
 This project is a CLI to shorten the docker commands and compose multiple docker commands into one.
 
 ## CLI commands
