@@ -12,6 +12,8 @@
     "build": "tsc -b tsconfig.json",
     "start": "nodemon --exec ts-node -- src/doc.ts",
     "test": "",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint src",
     "link": "npm run build && npm install -g"
   },
   "repository": {
