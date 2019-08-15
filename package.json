@@ -5,7 +5,8 @@
   "main": "doc.js",
   "preferGlobal": true,
   "bin": {
-    "doc": "./dist/doc.js"
+    "dc": "./dist/docker-extension.js",
+    "docker-extension": "./dist/docker-extension.js"
   },
   "scripts": {
     "build": "tsc -b tsconfig.json",
