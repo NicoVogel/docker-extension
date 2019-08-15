@@ -12,7 +12,7 @@ Shorts:
 | ------- | -----------------| ----------------------- | ---------------------------------------- |
 | &check; | `dc i`           | `docker images`         |                                          |
 | &check; | `dc c *(dc ps)*` | `docker ps`             |                                          |
-| &#9744; | `dc n`           | `docker network ls`     |                                          |
+| &check; | `dc n`           | `docker network ls`     |                                          |
 | &#9744; | `dc v`           | `docker volume ls`      |                                          |
 | &#9744; | `dc i p`         | `docker image prune -f` |                                          |
 | &#9744; | `dc io`          | `docker image`          | forwards the options to original command |
