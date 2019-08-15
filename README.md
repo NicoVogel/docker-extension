@@ -29,7 +29,7 @@ Compose:
 
 ### dc b
 
-Simplefied implementation of *docker build -t "\<tag>" -f "\<file name>" \<file location>*.
+Simplified implementation of *docker build -t "\<tag>" -f "\<file name>" \<file location>*.
 
 It does save the file location and name to use it later for *dc i r*.
 
