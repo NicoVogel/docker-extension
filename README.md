@@ -7,7 +7,7 @@ This project is a CLI to shorten the docker commands and compose multiple docker
 Shorts:
 
 | impl | cli            | original              | description                              |
-|------|----------------|-----------------------|------------------------------------------|
+| ---- | -------------- | --------------------- | ---------------------------------------- |
 | [x]  | dc i           | docker images         |                                          |
 | []   | dc c *(dc ps)* | docker ps             |                                          |
 | []   | dc n           | docker network ls     |                                          |
@@ -20,10 +20,22 @@ Shorts:
 
 Compose:
 
-| impl | cli                  | orig                              | description                                                   |
-|------|----------------------|-----------------------------------|---------------------------------------------------------------|
-| []   | dc b [name] \<file\> | docker build -t \<name\> \<file\> | builds image and remembers Dockerfile location                |
-| []   | dc i r \<ID\>        | docker build                      | rebuild the image by using the remembered Dockerfile location |
+| impl | cli                  | orig                              | description                                                       |
+| ---- | -------------------- | --------------------------------- | ----------------------------------------------------------------- |
+| []   | dc b [name] \<file\> | docker build -t \<name\> \<file\> | builds image and remembers Dockerfile location                    |
+| []   | dc i r \<ID\>        |                                   | rebuild the image and remove container and dangling of that image |
+
+## More Details
+
+### dc b
+
+Simplefied implementation of *docker build -t "\<tag>" -f "\<file name>" \<file location>*.
+
+It does save the file location and name to use it later for *dc i r*.
+
+#### Arguments
+
+- 
 
 ## for later
 
