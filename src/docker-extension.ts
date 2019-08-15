@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-import { spawn } from 'child_process';
 import * as program from 'commander';
 import { Docker, Options } from 'docker-cli-js';
-import { setupImageCommands } from './image/images';
+import { setupImageCommands } from './images';
 
 const options = new Options(undefined, __dirname);
 const docker = new Docker(options);
