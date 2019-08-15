@@ -2,7 +2,7 @@ import { CommanderStatic } from 'commander';
 import { Docker } from 'docker-cli-js';
 import { ContainerCommand } from './model/docker-cli-js';
 
-export const setupImageCommands = (
+export const setupContainerCommands = (
 	program: CommanderStatic,
 	docker: Docker
 ): void => {
