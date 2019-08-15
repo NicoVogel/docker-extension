@@ -13,7 +13,7 @@
     "start": "nodemon --exec ts-node -- src/doc.ts",
     "test": "",
     "format": "prettier --write \"src/**/*.ts\"",
-    "lint": "eslint src",
+    "lint": "eslint src/**/*",
     "link": "npm run build && npm install -g"
   },
   "repository": {
