@@ -35,12 +35,10 @@ Simplified implementation of *docker build -t "\<tag>" -f "\<file name>" \<file 
 
 It does save the file location and name to use it later for *dc i r*.
 
-#### Arguments
+---TODO---
 
-- 
+## Helpful links
 
-## for later
+[limitations of sub commands](https://github.com/tj/commander.js/issues/521)
 
-enhance the docker calls with the following module
 
-[docker-cli-js](https://www.npmjs.com/package/docker-cli-js)
