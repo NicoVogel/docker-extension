@@ -6,7 +6,7 @@ import * as program from 'commander';
 program.version('0.0.1');
 program
 	.command('images')
-	.alias('is')
+	.alias('i')
 	.description('equivalent to "docker images"')
 	.action(() => {
 		const dockerImages = spawn('docker', ['images']);
