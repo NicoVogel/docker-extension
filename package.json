@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc -b tsconfig.json",
-    "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/docker-extension.ts",
+    "start": "nodemon --watch 'src/**/*.ts' --exec npm run link",
     "test": "",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
