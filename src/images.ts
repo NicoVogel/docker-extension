@@ -1,5 +1,6 @@
 import { CommanderStatic } from 'commander';
 import { Docker } from 'docker-cli-js';
+import { ImageCommand } from './model/docker-cli-js';
 
 export const setupImageCommands = (
 	program: CommanderStatic,
@@ -10,7 +11,7 @@ export const setupImageCommands = (
 		.alias('i')
 		.description('list available images')
 		.action(() => {
-			docker.command('images').then(function(data) {
+			docker.command('images').then(function(data: ImageCommand) {
 				console.log(data.raw);
 			});
 		});
