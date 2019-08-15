@@ -11,7 +11,7 @@ Shorts:
 | impl    | cli              | original                | description                              |
 | ------- | -----------------| ----------------------- | ---------------------------------------- |
 | &check; | `dc i`           | `docker images`         |                                          |
-| &#9744; | `dc c *(dc ps)*` | `docker ps`             |                                          |
+| &check; | `dc c *(dc ps)*` | `docker ps`             |                                          |
 | &#9744; | `dc n`           | `docker network ls`     |                                          |
 | &#9744; | `dc v`           | `docker volume ls`      |                                          |
 | &#9744; | `dc i p`         | `docker image prune -f` |                                          |
