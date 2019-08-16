@@ -1,36 +1,32 @@
+import { exec } from 'child_process';
 import { CommanderStatic } from 'commander';
-import { Docker } from 'docker-cli-js';
-import { NetworkCommand } from './model/docker-cli-js';
 
-const execLs = (docker: Docker): void => {
-	docker.command('network ls').then(function(data: NetworkCommand) {
-		console.log(data.raw);
+const execPrune = (options: any): void => {
+	exec(
+		`docker network prune ${!options['no-force'] ? '-f' : ''}`,
+		(error, stdout, stderr) => {
+			console.log(stdout);
+		}
+	);
+};
+const execLs = (): void => {
+	exec(`docker network ls`, (error, stdout, stderr) => {
+		console.log(stdout);
 	});
 };
 
-const execPrune = (docker: Docker, options: any): void => {
-	docker
-		.command(`network prune ${!options['no-force'] ? '-f' : ''}`)
-		.then(function(data: NetworkCommand) {
-			console.log(data.raw);
-		});
-};
-
-const selectCommand = (docker: Docker, command: string, options: any): void => {
+const selectCommand = (command: string, options: any): void => {
 	switch (command) {
 		case 'p':
 		case 'prune':
-			execPrune(docker, options);
+			execPrune(options);
 			break;
 		default:
-			execLs(docker);
+			execLs();
 	}
 };
 
-export const setupNetworkCommands = (
-	program: CommanderStatic,
-	docker: Docker
-): void => {
+export const setupNetworkCommands = (program: CommanderStatic): void => {
 	program
 		.command('network <command>')
 		.alias('n')
@@ -40,6 +36,6 @@ export const setupNetworkCommands = (
 		.option('-f --noforce', 'do not force prune')
 		.option('')
 		.action((command, options) => {
-			selectCommand(docker, command, options);
+			selectCommand(command, options);
 		});
 };
