@@ -11,4 +11,5 @@ const dockerExtensionFile = fs.readFileSync(dockerExtensionPath).toString();
 const dockerExtensionNewFile = dockerExtensionFile.replace(/program\.version\('(.+?)'\)/, `program.version('${version}')`);
 fs.writeFileSync(dockerExtensionPath, dockerExtensionNewFile);
 
-cp.exec(`git commit -m 'update version number ${version}'`)
+cp.execSync(`git commit -m '${version}'`)
+cp.execSync(`git push`)
