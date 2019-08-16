@@ -10,7 +10,7 @@
   },
   "scripts": {
     "build": "tsc -b tsconfig.json",
-    "start": "nodemon --watch src --exec npm run link",
+    "watch": "nodemon --watch src --exec npm run link",
     "test": "",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
