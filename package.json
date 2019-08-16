@@ -1,6 +1,6 @@
 {
   "name": "docker-extension",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "shorten docker commands and compose multiple commands into one",
   "main": "doc.js",
   "preferGlobal": true,
