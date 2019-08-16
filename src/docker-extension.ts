@@ -5,7 +5,7 @@ import { setupImageCommands } from './images';
 import { setupContainerCommands } from './container';
 import { setupNetworkCommands } from './network';
 
-program.version('0.0.2').description('shorten and extend the docker commands');
+program.version('0.0.3').description('shorten and extend the docker commands');
 setupImageCommands(program);
 setupContainerCommands(program);
 setupNetworkCommands(program);
