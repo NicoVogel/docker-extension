@@ -1,18 +1,14 @@
+import { exec } from 'child_process';
 import { CommanderStatic } from 'commander';
-import { Docker } from 'docker-cli-js';
-import { ImageCommand } from './model/docker-cli-js';
 
-export const setupImageCommands = (
-	program: CommanderStatic,
-	docker: Docker
-): void => {
+export const setupImageCommands = (program: CommanderStatic): void => {
 	program
 		.command('image')
 		.alias('i')
 		.description('list available images')
 		.action(() => {
-			docker.command('images').then(function(data: ImageCommand) {
-				console.log(data.raw);
+			exec('docker images', (error, stdout, stderr) => {
+				console.log(stdout);
 			});
 		});
 };

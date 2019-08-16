@@ -1,0 +1,8 @@
+{
+    "verbose": false,
+    "ignore": [
+      "*-test.ts"
+    ],
+    "ext": "ts"
+  }
+  
