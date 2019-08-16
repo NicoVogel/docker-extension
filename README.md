@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/NicoVogel/docker-extension.svg?branch=master)](https://travis-ci.org/NicoVogel/docker-extension)
 
-This project is a CLI to shorten the docker commands and compose multiple docker commands into one.
+This project is a CLI to shorten the docker commands and compose multiple docker commands into one. This package targets developers for local use. The goal is to speed up docker usages in general.
 
 ## CLI commands
 
@@ -36,10 +36,18 @@ Simplified implementation of *docker build -t "\<tag>" -f "\<file name>" \<file 
 
 It does save the file location and name to use it later for *dc i r*.
 
----TODO---
+## unsuitable packages for the project
 
-## Helpful links
+the following packages where tested, but not suitable for the project.
 
-[limitations of sub commands](https://github.com/tj/commander.js/issues/521)
+### docker-cli-js
 
+[npm link](https://www.npmjs.com/package/docker-cli-js)
 
+The issue is that it does not support docker toolbox and I don't want to limit this tool in such a way.
+
+### commander
+
+[npm link](https://www.npmjs.com/package/commander)
+
+The issue is that it does not support sub commands to the extend I will need for the upcoming enhancing commands.
