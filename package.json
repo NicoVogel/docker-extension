@@ -15,8 +15,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
     "link": "npm run build && npm install -g",
-    "unlink": "npm uninstall -g",
-    "version": "node updateVersion.js"
+    "unlink": "npm uninstall -g"
   },
   "repository": {
     "type": "git",
