@@ -1,9 +1,10 @@
 {
     "compilerOptions": {
     "target": "es5",
-    "lib": [
-        "es2017","es2015","dom","es6"
-    ],
+    "lib": [],
+    "removeComments": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
     "module": "commonjs",
     "outDir": "dist",
     "sourceMap": false,
