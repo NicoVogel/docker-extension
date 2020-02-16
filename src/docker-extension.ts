@@ -1,14 +1,20 @@
 #!/usr/bin/env node
 
-import * as program from 'commander';
-import { setupImageCommands } from './images';
-import { setupContainerCommands } from './container';
-import { setupNetworkCommands } from './network';
+import { Caller } from './@types/model';
+import { container } from './container';
+import { removeFirstArrayItem } from './helper';
 
-program.version('0.0.3').description('shorten and extend the docker commands');
-setupImageCommands(program);
-setupContainerCommands(program);
-setupNetworkCommands(program);
+const callers: Caller[] = [container];
 
-// allow commander to parse `process.argv`
-program.parse(process.argv);
+const args = removeFirstArrayItem(process.argv);
+
+if (args.length === 0) {
+	// no parameter at all
+	callers[0].invoke([]);
+} else {
+	callers.forEach(caller => {
+		if (caller.abbriviation() === args[0]) {
+			caller.invoke(removeFirstArrayItem(args));
+		}
+	});
+}

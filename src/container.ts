@@ -1,26 +1,7 @@
-import { exec } from 'child_process';
-import { CommanderStatic } from 'commander';
+import { HelperCaller } from './helper';
 
-const listContainer = (options: any): void => {
-	exec(
-		`docker ps ${options.all ? '-a' : ''} ${options.quiet ? '-q' : ''} `,
-		(error, stdout, stderr) => {
-			console.log(stdout);
-		}
-	);
-};
+const mappings: Map<string, string> = new Map();
+mappings.set('p', 'prune');
+mappings.set('e', 'exec');
 
-export const setupContainerCommands = (program: CommanderStatic): void => {
-	program
-		.command('ps')
-		.description('list available container')
-		.option('-a, --all', 'show all container')
-		.option('-q, --quiet', 'show only the container IDs')
-		.action(listContainer);
-	program
-		.command('c')
-		.description('list available container')
-		.option('-a, --all', 'show all container')
-		.option('-q, --quiet', 'show only the container IDs')
-		.action(listContainer);
-};
+export const container = new HelperCaller('container', 'c', mappings);
