@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
 import { Caller } from './@types/model';
-import { container } from './container';
 import { removeFirstItem, runner, removeFirstItems } from './helper';
 import { existsSync } from 'fs';
+import { container } from './container';
+import { image } from './images';
 
 const removeURLParameter = (args: string[]) => {
 	const clone = [...args];
@@ -22,7 +23,7 @@ const removeURLParameter = (args: string[]) => {
 	return clone;
 };
 
-const callerImports = [container];
+const callerImports = [container, image];
 const forwardKeywords = [
 	'builder',
 	'config',
@@ -43,13 +44,7 @@ const forwardKeywords = [
 const callers: Map<string, Caller> = new Map();
 callerImports.forEach(caller => callers.set(caller.abbriviation(), caller));
 const args = removeURLParameter(process.argv);
-
-console.log(process.argv);
-console.log(args);
-
-
 if (args.length === 0) {
-	console.log('no param');
 	callerImports[0].invoke([]);
 } else {
 	const command = args[0];
@@ -63,6 +58,5 @@ if (args.length === 0) {
 	if (selectCaller === undefined) {
 		selectCaller = callerImports[0];
 	}
-	console.log(JSON.stringify(selectCaller));
 	selectCaller.invoke(removeFirstItem(args));
 }
