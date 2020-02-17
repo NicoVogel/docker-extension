@@ -1,7 +1,10 @@
 export interface Config {
-    [abbrev: string]: {
-        command: string,
-        default: string,
-        mappings: [{ abbrev: string, action: string }]
-    }
+	showCommand?: boolean;
+	abbrev: {
+		[abbrev: string]: {
+			command: string;
+			default: string;
+			mappings: [string, string][];
+		};
+	};
 }

@@ -1,30 +1,47 @@
 {
-    "c": {
-        "command": "container",
-        "default": "ps",
-        "mappings": [
-            {
-                "abbrev": "p",
-                "action": "prune"
-            },
-            {
-                "abbrev": "e",
-                "action": "exec"
-            }
-        ]
-    },
-    "i": {
-        "command": "image",
-        "default": "ls",
-        "mappings": [
-            {
-                "abbrev": "h",
-                "action": "history"
-            },
-            {
-                "abbrev": "i",
-                "action": "inspect"
-            }
-        ]
+    "showCommand": true,
+    "abbrev": {
+        "c": {
+            "command": "container",
+            "default": "ps",
+            "mappings": [
+                [
+                    "p",
+                    "prune"
+                ],
+                [
+                    "e",
+                    "exec"
+                ]
+            ]
+        },
+        "i": {
+            "command": "image",
+            "default": "ls",
+            "mappings": [
+                [
+                    "h",
+                    "history"
+                ],
+                [
+                    "i",
+                    "inspect"
+                ],
+                [
+                    "p",
+                    "prune"
+                ]
+            ]
+        },
+        "n": {
+            "command": "network",
+            "default": "ls",
+            "mappings": [
+                [
+                    "p",
+                    "prune"
+                ]
+            ]
+        }
     }
 }
