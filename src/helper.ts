@@ -39,7 +39,7 @@ export class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) { }
+	) {}
 	abbriviation(): string {
 		return this.abbrev;
 	}
