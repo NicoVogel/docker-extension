@@ -1,14 +1,7 @@
-import { exec } from 'child_process';
-import { CommanderStatic } from 'commander';
+import { HelperCaller } from './helper';
 
-export const setupImageCommands = (program: CommanderStatic): void => {
-	program
-		.command('image')
-		.alias('i')
-		.description('list available images')
-		.action(() => {
-			exec('docker images', (error, stdout, stderr) => {
-				console.log(stdout);
-			});
-		});
-};
+const mappings: Map<string, string> = new Map();
+mappings.set('h', 'history');
+mappings.set('i', 'inspect');
+
+export const image = new HelperCaller('image', 'i', mappings, 'ls');
