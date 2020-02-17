@@ -11,16 +11,10 @@ export const removeFirstItems = (array: any[], amount: number) => {
 
 export const runner = (command: string, action: string, args: string[]) => {
 	const fullCommand = `docker ${command} ${action} ${removeFirstItem(args).join(' ')}`;
-	console.log(fullCommand);
+	console.log(`DEBUG: ${fullCommand}`);
 	exec(fullCommand, (error, stdout, stderr) => {
-		console.log({ error, stdout, stderr })
-		if (error !== undefined && error !== null) {
-			console.error(error);
-			return;
-		}
-		if (stderr !== undefined) {
-			console.log(stderr);
-			return;
+		if (stderr !== '') {
+			console.error(stderr);
 		}
 		console.log(stdout);
 	});
@@ -30,17 +24,15 @@ export class HelperCaller implements Caller {
 	constructor(
 		private command: string,
 		private abbrev: string,
-		private maps: Map<string, string>
+		private maps: Map<string, string>,
+		private defaultAction: string
 	) { }
 	abbriviation(): string {
 		return this.abbrev;
 	}
 	invoke(args: string[]): void {
-		console.log(`invoke call with params: ${JSON.stringify(args)}`)
 		const firstArg = args[0];
-
-
-		let action = firstArg === undefined ? this.maps.values().next().value : this.maps.get(firstArg);
+		let action = firstArg === undefined ? this.defaultAction : this.maps.get(firstArg);
 		if (action === undefined) {
 			action = firstArg;
 		}
