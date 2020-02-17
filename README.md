@@ -2,44 +2,26 @@
 
 [![Build Status](https://travis-ci.org/NicoVogel/docker-extension.svg?branch=master)](https://travis-ci.org/NicoVogel/docker-extension)
 
-This project is a CLI to shorten the docker commands and compose multiple docker commands into one.
+This project is a CLI to shorten the docker commands. You can define the abbreviations in the `config.json` file.
 
-## CLI commands
+## Getting Started
 
-Shorts:
+```bash
+npm i docker-extension -g
+```
 
-| impl    | cli                   | original                  | description                              |
-|---------|-----------------------|---------------------------|------------------------------------------|
-| &check; | `dc i`                | `docker images`           |                                          |
-| &check; | `dc c` **or** `dc ps` | `docker ps`               |                                          |
-| &check; | `dc n`                | `docker network ls`       |                                          |
-| &check; | `dc n p`              | `docker network prune -f` |                                          |
-| &#9744; | `dc v`                | `docker volume ls`        |                                          |
-| &#9744; | `dc i p`              | `docker image prune -f`   |                                          |
-| &#9744; | `dc io`               | `docker image`            | forwards the options to original command |
-| &#9744; | `dc co`               | `docker container`        | forwards the options to original command |
-| &#9744; | `dc no`               | `docker network`          | forwards the options to original command |
-| &#9744; | `dc vo`               | `docker volume`           | forwards the options to original command |
+Now you can use the predefined abbreviations. You can edit them in the `config.json` which is located next to the `docker-extension.js` 
 
-Compose:
+## Future planes
 
-| impl    | cli                    | orig                                | description                                                       |
-|---------|------------------------|-------------------------------------|-------------------------------------------------------------------|
-| &#9744; | `dc b [name] \<file\>` | `docker build -t \<name\> \<file\>` | builds image and remembers Dockerfile location                    |
-| &#9744; | `dc i r \<ID\>`        |                                     | rebuild the image and remove container and dangling of that image |
+### Update config
 
-## More Details
+It's no fun to navigate to the config file. Therefore, a better approach is needed. The current idea is to include a command which allows you to override the given config with another config.
 
-### dc b
+### Custom build command
 
-Simplified implementation of *docker build -t "\<tag>" -f "\<file name>" \<file location>*.
+Sometimes you need to build an image more than once by hand, because it would cost too much time to automate it or you just play around. Possible features for the custom build command are:
 
-It does save the file location and name to use it later for *dc i r*.
-
----TODO---
-
-## Helpful links
-
-[limitations of sub commands](https://github.com/tj/commander.js/issues/521)
-
+- remember the build commands
+- add a rebuild command which uses the last build command 
 
