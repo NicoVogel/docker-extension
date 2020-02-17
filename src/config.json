@@ -1,0 +1,30 @@
+{
+    "c": {
+        "command": "container",
+        "default": "ps",
+        "mappings": [
+            {
+                "abbrev": "p",
+                "action": "prune"
+            },
+            {
+                "abbrev": "e",
+                "action": "exec"
+            }
+        ]
+    },
+    "i": {
+        "command": "image",
+        "default": "ls",
+        "mappings": [
+            {
+                "abbrev": "h",
+                "action": "history"
+            },
+            {
+                "abbrev": "i",
+                "action": "inspect"
+            }
+        ]
+    }
+}
