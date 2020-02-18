@@ -2,7 +2,7 @@
   "name": "docker-extension",
   "version": "1.0.1",
   "description": "shorten docker commands and compose multiple commands into one",
-  "main": "doc.js",
+  "main": "docker-extension.js",
   "preferGlobal": true,
   "bin": {
     "dc": "./dist/docker-extension.js",
@@ -11,7 +11,6 @@
   "scripts": {
     "build": "tsc -b tsconfig.json",
     "start": "nodemon --watch src --exec npm run link",
-    "test": "",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
     "link": "npm run build && npm install -g",
