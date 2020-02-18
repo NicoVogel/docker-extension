@@ -48,9 +48,6 @@ class HelperCaller implements Caller {
 		private defaultAction: string,
 		private showCommand?: boolean
 	) { }
-	abbriviation(): string {
-		return this.abbrev;
-	}
 	invoke(args: string[]): void {
 		const firstArg = args[0];
 		let action =
