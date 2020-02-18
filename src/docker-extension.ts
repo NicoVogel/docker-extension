@@ -1,64 +1,173 @@
 #!/usr/bin/env node
 
 import { Caller } from './@types/model';
-import {
-	removeFirstItem,
-	runner,
-	removeFirstItems,
-	HelperCaller
-} from './helper';
-import { getConfig } from './config';
+import { Config } from './@types/config';
+import { dirname, join } from 'path';
+import { readFileSync, existsSync, writeFileSync } from 'fs';
+import { sync as mkdirpSync } from 'mkdirp';
+import { spawn } from 'child_process';
 
-const config = getConfig(process.argv[1]);
-const callers: Map<string, Caller> = new Map();
+const removeFirstItem = (array: any[]) => removeFirstItems(array, 1);
 
-for (const key in config.abbrev) {
-	if (config.abbrev.hasOwnProperty(key)) {
-		const data = config.abbrev[key];
-		const caller = new HelperCaller(
-			data.command,
-			key,
-			new Map(data.mappings),
-			data.default,
-			config.showCommand
+const removeFirstItems = (array: any[], amount: number) => {
+	const clone = [...array];
+	clone.splice(0, amount);
+	return clone;
+};
+
+const runner = (
+	command: string,
+	action: string,
+	args: string[],
+	showCommand?: boolean
+) => {
+	if (showCommand === undefined) {
+		showCommand = false;
+	}
+	if (showCommand) {
+		console.log(
+			`-> docker ${command} ${action} ${removeFirstItem(args).join(' ')}`
 		);
-		callers.set(key, caller);
+	}
+	const forwardArgs = removeFirstItem(args);
+	const child = spawn('docker', [command, action, ...forwardArgs], {
+		stdio: 'inherit'
+	});
+	child.on('message', msg => console.log(msg));
+	child.on('error', err => console.error(err));
+	child.on('close', data => {
+		// is invoked when command is done
+	});
+};
+
+class HelperCaller implements Caller {
+	constructor(
+		private command: string,
+		private abbrev: string,
+		private maps: Map<string, string>,
+		private defaultAction: string,
+		private showCommand?: boolean
+	) { }
+	abbriviation(): string {
+		return this.abbrev;
+	}
+	invoke(args: string[]): void {
+		const firstArg = args[0];
+		let action =
+			firstArg === undefined ? this.defaultAction : this.maps.get(firstArg);
+		if (action === undefined) {
+			action = firstArg;
+		}
+		runner(this.command, action, args, this.showCommand);
 	}
 }
 
-const defaultCaller: Caller = callers.values().next().value;
-const forwardKeywords = [
-	'builder',
-	'config',
-	'container',
-	'context',
-	'image',
-	'network',
-	'node',
-	'plugin',
-	'secret',
-	'service',
-	'stack',
-	'swarm',
-	'system',
-	'trust',
-	'volum'
-];
+const defaultConfig: Config = {
+	showCommand: true,
+	abbrev: {
+		c: {
+			command: 'container',
+			default: 'ps',
+			mappings: [['p', 'prune'], ['e', 'exec']]
+		},
+		i: {
+			command: 'image',
+			default: 'ls',
+			mappings: [['h', 'history'], ['i', 'inspect'], ['p', 'prune']]
+		},
+		n: {
+			command: 'network',
+			default: 'ls',
+			mappings: [['p', 'prune']]
+		}
+	}
+};
 
-const args = removeFirstItems(process.argv, 2);
-if (args.length === 0) {
-	defaultCaller.invoke([]);
-} else {
-	const command = args[0];
-	if (forwardKeywords.some(keyword => keyword === command)) {
-		const action = args[1];
-		const params = removeFirstItems(args, 2);
-		console.log({ command, action, params });
-		runner(command, action, params, config.showCommand);
+const getConfig = (processUrl: string): Config => {
+	try {
+		const installLocation = dirname(processUrl);
+		const configLocation = join(
+			installLocation,
+			'./.config/docker-extension.json'
+		);
+		if (existsSync(configLocation) === false) {
+			try {
+				mkdirpSync(dirname(configLocation));
+				writeFileSync(configLocation, JSON.stringify(defaultConfig, null, 2));
+			} catch (err) {
+				throw new Error(
+					`Unable to write default config to location ${configLocation}. Error message: ${err.message}`
+				);
+			}
+			return defaultConfig;
+		}
+		try {
+			return JSON.parse(readFileSync(configLocation).toString()) as Config;
+		} catch (err) {
+			throw new Error(
+				`Unable to load and parse the the config file from location ${configLocation}. Error message: ${err.message}`
+			);
+		}
+	} catch (err) {
+		console.error(`Promblem while managing the config file! ${err.message}`);
 	}
-	let selectCaller = callers.get(command);
-	if (selectCaller === undefined) {
-		selectCaller = defaultCaller;
+	return defaultConfig;
+};
+
+const run = () => {
+	const config = getConfig(process.argv[1]);
+	const callers: Map<string, Caller> = new Map();
+
+	for (const key in config.abbrev) {
+		if (config.abbrev.hasOwnProperty(key)) {
+			const data = config.abbrev[key];
+			const caller = new HelperCaller(
+				data.command,
+				key,
+				new Map(data.mappings),
+				data.default,
+				config.showCommand
+			);
+			callers.set(key, caller);
+		}
 	}
-	selectCaller.invoke(removeFirstItem(args));
-}
+
+	const defaultCaller: Caller = callers.values().next().value;
+	const forwardKeywords = [
+		'builder',
+		'config',
+		'container',
+		'context',
+		'image',
+		'network',
+		'node',
+		'plugin',
+		'secret',
+		'service',
+		'stack',
+		'swarm',
+		'system',
+		'trust',
+		'volum'
+	];
+
+	const args = removeFirstItems(process.argv, 2);
+	if (args.length === 0) {
+		defaultCaller.invoke([]);
+	} else {
+		const command = args[0];
+		if (forwardKeywords.some(keyword => keyword === command)) {
+			const action = args[1];
+			const params = removeFirstItems(args, 2);
+			console.log({ command, action, params });
+			runner(command, action, params, config.showCommand);
+		}
+		let selectCaller = callers.get(command);
+		if (selectCaller === undefined) {
+			selectCaller = defaultCaller;
+		}
+		selectCaller.invoke(removeFirstItem(args));
+	}
+};
+
+run();
