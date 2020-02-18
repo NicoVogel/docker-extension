@@ -65,17 +65,22 @@ const defaultConfig: Config = {
 		c: {
 			command: 'container',
 			default: 'ps',
-			mappings: [['p', 'prune'], ['e', 'exec']]
+			mappings: [['p', 'prune'], ['e', 'exec'], ['i', 'inspect']]
 		},
 		i: {
 			command: 'image',
 			default: 'ls',
-			mappings: [['h', 'history'], ['i', 'inspect'], ['p', 'prune']]
+			mappings: [['h', 'history'], ['i', 'inspect'], ['p', 'prune'], ['b', 'build']]
 		},
 		n: {
 			command: 'network',
 			default: 'ls',
-			mappings: [['p', 'prune']]
+			mappings: [['p', 'prune'], ['i', 'inspect']]
+		},
+		v: {
+			command: 'volume',
+			default: 'ls',
+			mappings: [['p', 'prune'], ['i', 'inspect']]
 		}
 	}
 };
