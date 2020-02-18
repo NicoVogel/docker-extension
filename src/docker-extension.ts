@@ -106,7 +106,7 @@ const getConfig = (processUrl: string): Config => {
 			);
 		}
 	} catch (err) {
-		console.error(`Promblem while managing the config file! ${err.message}`);
+		console.error(`Problem while managing the config file! ${err.message}`);
 	}
 	return defaultConfig;
 };
@@ -145,7 +145,7 @@ const run = () => {
 		'swarm',
 		'system',
 		'trust',
-		'volum'
+		'volume'
 	];
 
 	const args = removeFirstItems(process.argv, 2);
