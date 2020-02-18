@@ -7,15 +7,11 @@ import {
 	removeFirstItems,
 	HelperCaller
 } from './helper';
-import { readFileSync } from 'fs';
-import { Config } from './@types/config';
-import { dirname, join } from 'path';
+import { getConfig } from './config';
 
-const installLocation = dirname(process.argv[1]);
-const configLocation = join(installLocation, 'config.json');
-const config: Config = JSON.parse(readFileSync(configLocation).toString());
-
+const config = getConfig(process.argv[1]);
 const callers: Map<string, Caller> = new Map();
+
 for (const key in config.abbrev) {
 	if (config.abbrev.hasOwnProperty(key)) {
 		const data = config.abbrev[key];
@@ -29,8 +25,8 @@ for (const key in config.abbrev) {
 		callers.set(key, caller);
 	}
 }
-let defaultCaller: Caller = callers.values().next().value;
 
+const defaultCaller: Caller = callers.values().next().value;
 const forwardKeywords = [
 	'builder',
 	'config',
