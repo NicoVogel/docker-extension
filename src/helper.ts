@@ -28,9 +28,7 @@ export const runner = (
 		stdio: 'inherit'
 	});
 	child.on('message', msg => console.log(msg));
-	child.on('error', err =>
-		console.error(err)
-	);
+	child.on('error', err => console.error(err));
 	child.on('close', data => {
 		// is invoked when command is done
 	});
@@ -43,7 +41,7 @@ export class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) { }
+	) {}
 	abbriviation(): string {
 		return this.abbrev;
 	}
