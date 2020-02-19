@@ -43,7 +43,7 @@ class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) { }
+	) {}
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
