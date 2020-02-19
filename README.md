@@ -16,7 +16,7 @@ Now you can use the default abbreviations. To edit the abbreviations, open the c
 
 ## How does it work?
 
-The cli tool uses a config file to manage the abbreviations. All commands are separated into a *command* and *action*. For example `docker image ls` has the *command* `image` and *action* `ls`. When resolving the abbreviations, first the commands are checked and then the associated actions for the command.
+The cli tool uses a config file to manage the abbreviations. All commands are separated into a *command* and *action*. For example, `docker image ls` has the *command* `image` and *action* `ls`. When resolving the abbreviations, first the commands are checked and then the associated actions for the command.
 
 ## Usage
 
@@ -36,13 +36,21 @@ dc -a
 
 Results in `docker container ps -a`.
 
+You do not need to use the abbreviations. If the given command matches a docker command, then no logic will be executed.
+
+```bash
+dc images
+```
+
+Results in `docker images`.
+
 ## Config
 
-The config is located in the file `.config/docker-extension.json`, which is next to the installed `docker-extension.js`. If no config exists, the config is created by the default settings. If there is any issue while loading the file, the default is used.
+The config is in the file `.config/docker-extension.json`, which is next to the installed `docker-extension.js`. If no config exists, the config is created by the default settings. If there is any issue while loading the file, the default is used.
 
 ### Config structure
 
-The following
+The following structure can also be found at `src/@types/config.d.ts`.
 
 ```js
 export interface Config {
@@ -65,6 +73,8 @@ export interface Config {
 ```
 
 ### Default config
+
+When you install the extension for the first time, this config will be created. If there are any issues while reading or processing the config, this config is also used.
 
 ```js
 {
@@ -114,6 +124,5 @@ It's no fun to navigate to the config file. Therefore, a better approach is need
 
 Sometimes you need to build an image more than once by hand, because it would cost too much time to automate it or you just play around. Possible features for the custom build command are:
 
-- remember the build commands
+- remember a build command
 - add a rebuild command which uses the last build command 
-
