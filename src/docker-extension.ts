@@ -68,12 +68,7 @@ const defaultConfig: Config = {
 		i: {
 			command: 'image',
 			default: 'ls',
-			mappings: [
-				['h', 'history'],
-				['i', 'inspect'],
-				['p', 'prune'],
-				['b', 'build']
-			]
+			mappings: [['h', 'history'], ['i', 'inspect'], ['p', 'prune'], ['b', 'build']]
 		},
 		n: {
 			command: 'network',
@@ -133,7 +128,6 @@ const run = () => {
 				data.default,
 				config.showCommand
 			);
-			callers.set(key, caller);
 		}
 	}
 
