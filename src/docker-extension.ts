@@ -7,27 +7,25 @@ import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { sync as mkdirpSync } from 'mkdirp';
 import { spawn } from 'child_process';
 
-const removeFirstItem = <T>(array: T[]): T[] => removeFirstItems(array, 1);
-
 const removeFirstItems = <T>(array: T[], amount: number): T[] => {
 	const clone = [...array];
 	clone.splice(0, amount);
 	return clone;
 };
 
+const removeFirstItem = <T>(array: T[]): T[] => removeFirstItems(array, 1);
+
 const runner = (
 	command: string,
 	action: string,
 	args: string[],
 	showCommand?: boolean
-) => {
+): void => {
 	if (showCommand === undefined) {
 		showCommand = false;
 	}
 	if (showCommand) {
-		console.log(
-			`-> docker ${command} ${action} ${args.join(' ')}`
-		);
+		console.log(`-> docker ${command} ${action} ${args.join(' ')}`);
 	}
 	const child = spawn('docker', [command, action, ...args], {
 		stdio: 'inherit'
@@ -45,7 +43,7 @@ class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) { }
+	) {}
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
@@ -148,20 +146,21 @@ const generateCallers = (config: Config): Map<string, Caller> => {
 	}
 
 	return callers;
-}
+};
 
-const getCallers = (): { callers: Map<string, Caller>, config: Config } => {
-	let config = getConfig(process.argv[1]);
+const getCallers = (): { callers: Map<string, Caller>; config: Config } => {
+	const config = getConfig(process.argv[1]);
 	try {
 		return { callers: generateCallers(config), config };
 	} catch (error) {
-		console.warn(`Unable to generate callers from config. The defaultConfig is used instead. Message: ${error.message}`);
+		console.warn(
+			`Unable to generate callers from config. The defaultConfig is used instead. Message: ${error.message}`
+		);
 		return { callers: generateCallers(defaultConfig), config: defaultConfig };
 	}
-}
+};
 
-const run = () => {
-
+const run = (): void => {
 	const forwardKeywords = [
 		'builder',
 		'config',
