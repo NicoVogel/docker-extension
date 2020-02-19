@@ -1,7 +1,7 @@
 {
   "name": "docker-extension",
   "version": "1.0.2",
-  "description": "shorten docker commands and compose multiple commands into one",
+  "description": "shorten docker commands",
   "main": "./dist/docker-extension.js",
   "preferGlobal": true,
   "bin": {
