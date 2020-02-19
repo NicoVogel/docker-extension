@@ -47,13 +47,25 @@ class HelperCaller implements Caller {
 		private showCommand?: boolean
 	) { }
 	invoke(args: string[]): void {
-		const firstArg = args[0];
+		let passArgs = args;
+		const firstArg = passArgs[0];
+		const firstArgIsFlag = firstArg !== undefined && firstArg.startsWith('-');
+
+		// check if a action is given if its a flag
 		let action =
-			firstArg === undefined ? this.defaultAction : this.maps.get(firstArg);
+			firstArg === undefined || firstArgIsFlag
+				? this.defaultAction
+				: this.maps.get(firstArg);
+
 		if (action === undefined) {
+			// could not find a mapping for the action. expect it is not a shorting and the actual action
 			action = firstArg;
 		}
-		runner(this.command, action, args, this.showCommand);
+		if (!firstArgIsFlag) {
+			// remove action which is passes as a separate command
+			passArgs = removeFirstItem(passArgs);
+		}
+		runner(this.command, action, passArgs, this.showCommand);
 	}
 }
 
@@ -68,7 +80,12 @@ const defaultConfig: Config = {
 		i: {
 			command: 'image',
 			default: 'ls',
-			mappings: [['h', 'history'], ['i', 'inspect'], ['p', 'prune'], ['b', 'build']]
+			mappings: [
+				['h', 'history'],
+				['i', 'inspect'],
+				['p', 'prune'],
+				['b', 'build']
+			]
 		},
 		n: {
 			command: 'network',
@@ -114,8 +131,7 @@ const getConfig = (processUrl: string): Config => {
 	return defaultConfig;
 };
 
-const run = () => {
-	const config = getConfig(process.argv[1]);
+const generateCallers = (config: Config): Map<string, Caller> => {
 	const callers: Map<string, Caller> = new Map();
 
 	for (const key in config.abbrev) {
@@ -123,7 +139,6 @@ const run = () => {
 			const data = config.abbrev[key];
 			const caller = new HelperCaller(
 				data.command,
-				key,
 				new Map(data.mappings),
 				data.default,
 				config.showCommand
@@ -153,6 +168,7 @@ const run = () => {
 		'container',
 		'context',
 		'image',
+		'images',
 		'network',
 		'node',
 		'plugin',
@@ -165,26 +181,32 @@ const run = () => {
 		'volume'
 	];
 
-	const args = removeFirstItems(process.argv, 2);
-	if (args.length === 0) {
-		defaultCaller.invoke([]);
-	} else {
-		const command = args[0];
-		if (forwardKeywords.some(keyword => keyword === command)) {
-			const action = args[1];
-			const params = removeFirstItems(args, 2);
-			console.log({ command, action, params });
-			runner(command, action, params, config.showCommand);
-		}
-		let selectCaller = callers.get(command);
-		if (selectCaller === undefined) {
 	const { callers, config } = getCallers();
 	const defaultCaller: Caller = callers.values().next().value;
-			selectCaller = defaultCaller;
+	const args = removeFirstItems(process.argv, 2);
 
-		}
-		selectCaller.invoke(removeFirstItem(args));
+	if (args.length === 0) {
+		defaultCaller.invoke([]);
+		return;
 	}
+
+	const command = args[0];
+	// ignore docker-extension logic if the first argument is a keyword from docker
+	if (forwardKeywords.some(keyword => keyword === command)) {
+		const action = args[1];
+		const params = removeFirstItems(args, 2);
+		runner(command, action, params, config.showCommand);
+		return;
+	}
+
+	let selectCaller = callers.get(command);
+	let passArgs = args;
+	if (selectCaller === undefined) {
+		selectCaller = defaultCaller;
+	} else {
+		passArgs = removeFirstItem(args);
+	}
+	selectCaller.invoke(passArgs);
 };
 
 run();
