@@ -69,6 +69,7 @@ class HelperCaller implements Caller {
 
 const defaultConfig: Config = {
 	showCommand: true,
+	default: 'c',
 	abbrev: {
 		c: {
 			command: 'container',
@@ -160,6 +161,20 @@ const getCallers = (): { callers: Map<string, Caller>; config: Config } => {
 	}
 };
 
+const getDefaultCaller = (
+	callers: Map<string, Caller>,
+	config: Config
+): Caller => {
+	const defaultCaller = callers.get(config.default);
+	if (defaultCaller === undefined) {
+		console.warn(
+			`The default option with the abbreviation '${config.default}' does not have a mapping! the first mapping is now the default`
+		);
+		return callers.values().next().value;
+	}
+	return defaultCaller;
+};
+
 const run = (): void => {
 	const forwardKeywords = [
 		'builder',
@@ -181,7 +196,7 @@ const run = (): void => {
 	];
 
 	const { callers, config } = getCallers();
-	const defaultCaller: Caller = callers.values().next().value;
+	const defaultCaller = getDefaultCaller(callers, config);
 	const args = removeFirstItems(process.argv, 2);
 
 	if (args.length === 0) {

@@ -1,5 +1,6 @@
 export interface Config {
 	showCommand?: boolean;
+	default: string;
 	abbrev: {
 		[abbrev: string]: {
 			command: string;
