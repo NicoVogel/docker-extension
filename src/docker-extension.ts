@@ -138,7 +138,6 @@ const run = () => {
 		'config',
 		'container',
 		'context',
-		'images',
 		'image',
 		'network',
 		'node',
@@ -165,7 +164,10 @@ const run = () => {
 		}
 		let selectCaller = callers.get(command);
 		if (selectCaller === undefined) {
+	const { callers, config } = getCallers();
+	const defaultCaller: Caller = callers.values().next().value;
 			selectCaller = defaultCaller;
+
 		}
 		selectCaller.invoke(removeFirstItem(args));
 	}
