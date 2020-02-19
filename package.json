@@ -1,6 +1,6 @@
 {
   "name": "docker-extension",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "shorten docker commands",
   "main": "./dist/docker-extension.js",
   "preferGlobal": true,
