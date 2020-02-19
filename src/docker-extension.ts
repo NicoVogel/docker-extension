@@ -7,9 +7,9 @@ import { readFileSync, existsSync, writeFileSync } from 'fs';
 import { sync as mkdirpSync } from 'mkdirp';
 import { spawn } from 'child_process';
 
-const removeFirstItem = (array: any[]) => removeFirstItems(array, 1);
+const removeFirstItem = <T>(array: T[]): T[] => removeFirstItems(array, 1);
 
-const removeFirstItems = (array: any[], amount: number) => {
+const removeFirstItems = <T>(array: T[], amount: number): T[] => {
 	const clone = [...array];
 	clone.splice(0, amount);
 	return clone;
@@ -26,11 +26,10 @@ const runner = (
 	}
 	if (showCommand) {
 		console.log(
-			`-> docker ${command} ${action} ${removeFirstItem(args).join(' ')}`
+			`-> docker ${command} ${action} ${args.join(' ')}`
 		);
 	}
-	const forwardArgs = removeFirstItem(args);
-	const child = spawn('docker', [command, action, ...forwardArgs], {
+	const child = spawn('docker', [command, action, ...args], {
 		stdio: 'inherit'
 	});
 	child.on('message', msg => console.log(msg));
