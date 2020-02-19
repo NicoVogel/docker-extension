@@ -32,9 +32,6 @@ const runner = (
 	});
 	child.on('message', msg => console.log(msg));
 	child.on('error', err => console.error(err));
-	child.on('close', data => {
-		// is invoked when command is done
-	});
 };
 
 class HelperCaller implements Caller {
