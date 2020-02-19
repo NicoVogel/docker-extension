@@ -43,7 +43,7 @@ class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) {}
+	) { }
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
@@ -70,16 +70,16 @@ class HelperCaller implements Caller {
 const defaultConfig: Config = {
 	showCommand: true,
 	default: 'c',
-	abbrev: {
+	commandMappings: {
 		c: {
 			command: 'container',
 			default: 'ps',
-			mappings: [['p', 'prune'], ['e', 'exec'], ['i', 'inspect']]
+			actionMappings: [['p', 'prune'], ['e', 'exec'], ['i', 'inspect']]
 		},
 		i: {
 			command: 'image',
 			default: 'ls',
-			mappings: [
+			actionMappings: [
 				['h', 'history'],
 				['i', 'inspect'],
 				['p', 'prune'],
@@ -89,12 +89,12 @@ const defaultConfig: Config = {
 		n: {
 			command: 'network',
 			default: 'ls',
-			mappings: [['p', 'prune'], ['i', 'inspect']]
+			actionMappings: [['p', 'prune'], ['i', 'inspect']]
 		},
 		v: {
 			command: 'volume',
 			default: 'ls',
-			mappings: [['p', 'prune'], ['i', 'inspect']]
+			actionMappings: [['p', 'prune'], ['i', 'inspect']]
 		}
 	}
 };
@@ -133,12 +133,12 @@ const getConfig = (processUrl: string): Config => {
 const generateCallers = (config: Config): Map<string, Caller> => {
 	const callers: Map<string, Caller> = new Map();
 
-	for (const key in config.abbrev) {
-		if (config.abbrev.hasOwnProperty(key)) {
-			const data = config.abbrev[key];
+	for (const key in config.commandMappings) {
+		if (config.commandMappings.hasOwnProperty(key)) {
+			const data = config.commandMappings[key];
 			const caller = new HelperCaller(
 				data.command,
-				new Map(data.mappings),
+				new Map(data.actionMappings),
 				data.default,
 				config.showCommand
 			);
