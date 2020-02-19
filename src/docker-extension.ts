@@ -128,6 +128,7 @@ const run = () => {
 				data.default,
 				config.showCommand
 			);
+			callers.set(key, caller);
 		}
 	}
 
@@ -137,6 +138,7 @@ const run = () => {
 		'config',
 		'container',
 		'context',
+		'images',
 		'image',
 		'network',
 		'node',
