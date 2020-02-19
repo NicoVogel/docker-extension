@@ -42,7 +42,6 @@ const runner = (
 class HelperCaller implements Caller {
 	constructor(
 		private command: string,
-		private abbrev: string,
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
