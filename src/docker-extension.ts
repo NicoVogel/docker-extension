@@ -132,7 +132,21 @@ const run = () => {
 		}
 	}
 
-	const defaultCaller: Caller = callers.values().next().value;
+	return callers;
+}
+
+const getCallers = (): { callers: Map<string, Caller>, config: Config } => {
+	let config = getConfig(process.argv[1]);
+	try {
+		return { callers: generateCallers(config), config };
+	} catch (error) {
+		console.warn(`Unable to generate callers from config. The defaultConfig is used instead. Message: ${error.message}`);
+		return { callers: generateCallers(defaultConfig), config: defaultConfig };
+	}
+}
+
+const run = () => {
+
 	const forwardKeywords = [
 		'builder',
 		'config',
