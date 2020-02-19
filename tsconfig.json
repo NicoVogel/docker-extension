@@ -4,7 +4,7 @@
         "lib": [],
         "module": "commonjs",
         "outDir": "dist",
-        "sourceMap": false,
+        "sourceMap": true,
         "strict": true
     },
     "include": [

@@ -8,10 +8,11 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}\\src\\docker-extension.ts",
+            "program": "${workspaceFolder}/src/docker-extension.ts",
+            "preLaunchTask": "tsc: build - tsconfig.json",
             "outFiles": [
                 "${workspaceFolder}/dist/**/*.js"
-            ],
+            ]
         }
     ]
 }
