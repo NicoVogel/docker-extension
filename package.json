@@ -4,6 +4,7 @@
   "description": "shorten docker commands",
   "main": "./dist/docker-extension.js",
   "preferGlobal": true,
+  "keywords": ["docker", "cli", "extension"],
   "bin": {
     "dc": "./dist/docker-extension.js",
     "docker-extension": "./dist/docker-extension.js"
