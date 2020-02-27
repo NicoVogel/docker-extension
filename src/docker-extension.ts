@@ -3,8 +3,7 @@
 import { Caller } from './@types/model';
 import { Config } from './@types/config';
 import { dirname, join } from 'path';
-import { readFileSync, existsSync, writeFileSync } from 'fs';
-import { sync as mkdirpSync } from 'mkdirp';
+import { readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
 import { spawn } from 'child_process';
 
 const removeFirstItems = <T>(array: T[], amount: number): T[] => {
@@ -43,7 +42,7 @@ class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) {}
+	) { }
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
@@ -108,7 +107,7 @@ const getConfig = (processUrl: string): Config => {
 		);
 		if (existsSync(configLocation) === false) {
 			try {
-				mkdirpSync(dirname(configLocation));
+				mkdirSync(dirname(configLocation), { recursive: true });
 				writeFileSync(configLocation, JSON.stringify(defaultConfig, null, 2));
 			} catch (err) {
 				throw new Error(
