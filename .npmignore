@@ -1,0 +1,9 @@
+.devcontainer
+.vscode
+src
+.eslintrc.js
+.prettierrc
+.travis.yml
+nodemon.json
+tsconfig.json
+*.js.map
