@@ -20,7 +20,8 @@ const run = (): void => {
 		'swarm',
 		'system',
 		'trust',
-		'volume'
+		'volume',
+		'rmi'
 	];
 
 	const { callers, config } = getCallers();
