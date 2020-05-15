@@ -38,7 +38,7 @@ const run = (): void => {
 	if (forwardKeywords.some(keyword => keyword === command)) {
 		const action = args[1];
 		const params = removeFirstItems(args, 2);
-		runner(command, action, params, config.showCommand);
+		runner(command, action, params);
 		return;
 	}
 

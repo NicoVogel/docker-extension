@@ -14,8 +14,7 @@ const generateCallers = (config: Config): Map<string, Caller> => {
             const caller = new HelperCaller(
                 data.command,
                 new Map(data.actionMappings),
-                data.default,
-                config.showCommand
+                data.default
             );
             callers.set(key, caller);
         }
@@ -28,7 +27,7 @@ export const getCallers = (): {
     callers: Map<string, Caller>;
     config: Config;
 } => {
-    const config = getConfig(process.argv[1]);
+    const config = getConfig();
     try {
         return { callers: generateCallers(config), config };
     } catch (error) {

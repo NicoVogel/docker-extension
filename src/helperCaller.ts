@@ -6,9 +6,8 @@ export class HelperCaller implements Caller {
 	constructor(
 		private command: string,
 		private maps: Map<string, string>,
-		private defaultAction: string,
-		private showCommand?: boolean
-	) {}
+		private defaultAction: string
+	) { }
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
@@ -28,6 +27,6 @@ export class HelperCaller implements Caller {
 			// remove action which is passes as a separate command
 			passArgs = removeFirstItem(passArgs);
 		}
-		runner(this.command, action, passArgs, this.showCommand);
+		runner(this.command, action, passArgs);
 	}
 }
