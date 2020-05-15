@@ -1,8 +1,11 @@
 // For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.101.0/containers/typescript-node-12
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.117.1/containers/docker-in-docker
 {
-	"name": "Node.js 12 & TypeScript",
+	"name": "Docker in Docker with Node",
 	"dockerFile": "Dockerfile",
+	"mounts": [
+		"source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind"
+	],
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash"
@@ -14,10 +17,4 @@
 		"streetsidesoftware.code-spell-checker",
 		"visualstudioexptteam.vscodeintellicode"
 	]
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
-	// Uncomment to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
-	// "remoteUser": "node"
 }
