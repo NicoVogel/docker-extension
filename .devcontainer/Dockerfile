@@ -64,7 +64,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Switch back to dialog for any ad-hoc use of apt-get
-ENV DEBIAN_FRONTEND=dialog
+ENV DEBIAN_FRONTEND=dialog\
+    NPM_CONFIG_PREFIX=/home/node/.npm-global \
+    PATH=$PATH:/home/node/.npm-global/bin
 
 # Setting the ENTRYPOINT to docker-init.sh will configure non-root access to 
 # the Docker socket if "overrideCommand": false is set in devcontainer.json. 
