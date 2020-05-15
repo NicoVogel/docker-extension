@@ -42,7 +42,7 @@ class HelperCaller implements Caller {
 		private maps: Map<string, string>,
 		private defaultAction: string,
 		private showCommand?: boolean
-	) { }
+	) {}
 	invoke(args: string[]): void {
 		let passArgs = args;
 		const firstArg = passArgs[0];
@@ -73,7 +73,11 @@ const defaultConfig: Config = {
 		c: {
 			command: 'container',
 			default: 'ps',
-			actionMappings: [['p', 'prune'], ['e', 'exec'], ['i', 'inspect']]
+			actionMappings: [
+				['p', 'prune'],
+				['e', 'exec'],
+				['i', 'inspect']
+			]
 		},
 		i: {
 			command: 'image',
@@ -88,12 +92,18 @@ const defaultConfig: Config = {
 		n: {
 			command: 'network',
 			default: 'ls',
-			actionMappings: [['p', 'prune'], ['i', 'inspect']]
+			actionMappings: [
+				['p', 'prune'],
+				['i', 'inspect']
+			]
 		},
 		v: {
 			command: 'volume',
 			default: 'ls',
-			actionMappings: [['p', 'prune'], ['i', 'inspect']]
+			actionMappings: [
+				['p', 'prune'],
+				['i', 'inspect']
+			]
 		}
 	}
 };
