@@ -1,14 +1,11 @@
 {
     "compilerOptions": {
-    "target": "es5",
-    "lib": [],
-    "removeComments": true,
-    "noImplicitThis": true,
-    "noImplicitAny": false,
-    "module": "commonjs",
-    "outDir": "dist",
-    "sourceMap": false,
-    "strict": true
+        "target": "es6",
+        "lib": [],
+        "module": "commonjs",
+        "outDir": "dist",
+        "sourceMap": true,
+        "strict": true
     },
     "include": [
         "./src/**/*.ts"

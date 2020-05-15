@@ -1,17 +1,21 @@
 {
   "name": "docker-extension",
-  "version": "0.0.3",
-  "description": "shorten docker commands and compose multiple commands into one",
-  "main": "doc.js",
+  "version": "1.1.1",
+  "description": "shorten docker commands",
+  "main": "./dist/docker-extension.js",
   "preferGlobal": true,
+  "keywords": [
+    "docker",
+    "cli",
+    "extension"
+  ],
   "bin": {
     "dc": "./dist/docker-extension.js",
     "docker-extension": "./dist/docker-extension.js"
   },
   "scripts": {
     "build": "tsc -b tsconfig.json",
-    "watch": "nodemon --watch src --exec npm run link",
-    "test": "",
+    "start": "nodemon --watch src --exec npm run link",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
     "link": "npm run build && npm install -g",
@@ -27,17 +31,12 @@
     "url": "https://github.com/NicoVogel/docker_extension/issues"
   },
   "homepage": "https://github.com/NicoVogel/docker_extension#readme",
-  "dependencies": {
-    "colors": "^1.3.3",
-    "commander": "^3.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@types/colors": "^1.2.1",
-    "@types/commander": "^2.12.2",
     "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
-    "eslint": "^6.1.0",
+    "eslint": "^6.3.0",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
     "typescript": "^3.5.3"

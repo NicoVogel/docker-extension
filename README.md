@@ -1,53 +1,128 @@
-# docker-extension
+# Docker commands in short
 
 [![Build Status](https://travis-ci.org/NicoVogel/docker-extension.svg?branch=master)](https://travis-ci.org/NicoVogel/docker-extension)
 
-This project is a CLI to shorten the docker commands and compose multiple docker commands into one. This package targets developers for local use. The goal is to speed up docker usages in general.
+This project is a CLI to shorten the docker commands. You can define the abbreviations in the `docker-extension.json` file.
 
-## CLI commands
+## Getting Started
 
-Shorts:
+```bash
+npm install docker-extension -g
+```
 
-| impl    | cli                   | original                  | description                              |
-|---------|-----------------------|---------------------------|------------------------------------------|
-| &check; | `dc i`                | `docker images`           |                                          |
-| &check; | `dc c` **or** `dc ps` | `docker ps`               |                                          |
-| &check; | `dc n`                | `docker network ls`       |                                          |
-| &check; | `dc n p`              | `docker network prune -f` |                                          |
-| &#9744; | `dc v`                | `docker volume ls`        |                                          |
-| &#9744; | `dc i p`              | `docker image prune -f`   |                                          |
-| &#9744; | `dc io`               | `docker image`            | forwards the options to original command |
-| &#9744; | `dc co`               | `docker container`        | forwards the options to original command |
-| &#9744; | `dc no`               | `docker network`          | forwards the options to original command |
-| &#9744; | `dc vo`               | `docker volume`           | forwards the options to original command |
+Now you can use the default abbreviations. To edit the abbreviations, open the config file `docker-extension.json` which is located next to the docker-extension.js in the npm-global directory.
 
-Compose:
+> /path/to/the/npm-global/directory/`.config/docker-extension.json`
 
-| impl    | cli                    | orig                                | description                                                       |
-|---------|------------------------|-------------------------------------|-------------------------------------------------------------------|
-| &#9744; | `dc b [name] \<file\>` | `docker build -t \<name\> \<file\>` | builds image and remembers Dockerfile location                    |
-| &#9744; | `dc i r \<ID\>`        |                                     | rebuild the image and remove container and dangling of that image |
+## How does it work?
 
-## More Details
+The cli tool uses a config file to manage the abbreviations. All commands are separated into a *command* and *action*. For example, `docker image ls` has the *command* `image` and *action* `ls`. When resolving the abbreviations, first the commands are checked and then the associated actions for the command.
 
-### dc b
+## Usage
 
-Simplified implementation of *docker build -t "\<tag>" -f "\<file name>" \<file location>*.
+The shortest command is:
 
-It does save the file location and name to use it later for *dc i r*.
+```bash
+dc
+```
 
-## unsuitable packages for the project
+This will execute the default command mapping and its default action mapping. If you did not change the config, this results in `docker container ps`.
 
-the following packages where tested, but not suitable for the project.
+If you provide a flag, it will not change the command and action.
 
-### docker-cli-js
+```bash
+dc -a
+```
 
-[npm link](https://www.npmjs.com/package/docker-cli-js)
+Results in `docker container ps -a`.
 
-The issue is that it does not support docker toolbox and I don't want to limit this tool in such a way.
+You do not need to use the abbreviations. If the given command matches a docker command, then no logic will be executed.
 
-### commander
+```bash
+dc images
+```
 
-[npm link](https://www.npmjs.com/package/commander)
+Results in `docker images`.
 
-The issue is that it does not support sub commands to the extend I will need for the upcoming enhancing commands.
+## Config
+
+The config is in the file `.config/docker-extension.json`, which is next to the installed `docker-extension.js`. If no config exists, the config is created by the default settings. If there is any issue while loading the file, the default is used.
+
+### Config structure
+
+The following structure can also be found at `src/@types/config.d.ts`.
+
+```js
+export interface Config {
+    // show the resulting command before executing it
+    showCommand?: boolean;
+    // which command mapping is used if no command is provided (has to be the abbreviation)
+    default: string;
+    // the abbreviation is the property name
+	commandMappings: {
+		[commandMappings: string]: {
+            // the full command name
+            command: string;
+            // which action is executed by default (has to be any full action)
+            default: string;
+            // the fist value is the abbreviation and the second the full action
+			actionMappings: [string, string][];
+		};
+	};
+}
+```
+
+### Default config
+
+When you install the extension for the first time, this config will be created. If there are any issues while reading or processing the config, this config is also used.
+
+```js
+{
+	showCommand: true,
+	default: 'c',
+	commandMappings: {
+		c: {
+			command: 'container',
+			default: 'ps',
+            actionMappings: [['p', 'prune'], 
+                            ['e', 'exec'], 
+                            ['i', 'inspect']]
+		},
+		i: {
+			command: 'image',
+			default: 'ls',
+			actionMappings: [
+				['h', 'history'],
+				['i', 'inspect'],
+				['p', 'prune'],
+				['b', 'build']
+			]
+		},
+		n: {
+			command: 'network',
+			default: 'ls',
+            actionMappings: [['p', 'prune'], 
+                            ['i', 'inspect']]
+		},
+		v: {
+			command: 'volume',
+			default: 'ls',
+            actionMappings: [['p', 'prune'], 
+                            ['i', 'inspect']]
+		}
+	}
+}
+```
+
+## Future planes
+
+### Update config
+
+It's no fun to navigate to the config file. Therefore, a better approach is needed. The current idea is to include a command which allows you to override the given config with another config.
+
+### Custom build command
+
+Sometimes you need to build an image more than once by hand, because it would cost too much time to automate it or you just play around. Possible features for the custom build command are:
+
+- remember a build command
+- add a rebuild command which uses the last build command 
