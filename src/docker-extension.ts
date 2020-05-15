@@ -2,8 +2,12 @@
 import { runner } from './runner';
 import { removeFirstItems, removeFirstItem } from './removeItem';
 import { getCallers, getDefaultCaller } from './caller';
+import { evalExtensionCommand } from './extensionCommands';
 
 const run = (): void => {
+
+	const extensionKeyword = 'extension'
+
 	const forwardKeywords = [
 		'builder',
 		'config',
@@ -39,6 +43,12 @@ const run = (): void => {
 		const action = args[1];
 		const params = removeFirstItems(args, 2);
 		runner(command, action, params);
+		return;
+	}
+
+	// execute docker-extension specific commands 
+	if (extensionKeyword === command) {
+		evalExtensionCommand(removeFirstItem(args), process.argv);
 		return;
 	}
 
