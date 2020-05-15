@@ -3,7 +3,9 @@ import { dirname, join } from 'path';
 import { defaultConfig } from './defaultConfig';
 import { Config } from './@types/config';
 
-export const getConfig = (processUrl: string): Config => {
+
+
+const configLoader = (processUrl: string): Config => {
 	try {
 		const installLocation = dirname(processUrl);
 		const configLocation = join(
@@ -33,3 +35,12 @@ export const getConfig = (processUrl: string): Config => {
 	}
 	return defaultConfig;
 };
+
+let config: Config;
+
+export const getConfig = (): Config => {
+	if (!config) {
+		config = configLoader(process.argv[1]);
+	}
+	return config;
+}
