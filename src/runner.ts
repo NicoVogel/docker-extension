@@ -1,23 +1,20 @@
 import { spawn } from 'child_process';
+import { getConfig } from './configHandler';
 
 export const runner = (
 	command: string,
 	action: string,
-	args: string[],
-	showCommand?: boolean
+	args: string[]
 ): void => {
-	if (showCommand === undefined) {
-		showCommand = false;
-	}
 	const spawnArgs = [command, action, ...args].filter(
 		element => element !== undefined
 	);
-	if (showCommand) {
+	if (getConfig().showCommand) {
 		console.log(`-> docker ${spawnArgs.join(' ')}`);
 	}
 	const child = spawn('docker', spawnArgs, {
 		stdio: 'inherit'
 	});
-	child.on('message', msg => console.log(msg));
-	child.on('error', err => console.error(err));
+	child.on('message', console.log);
+	child.on('error', console.error);
 };
