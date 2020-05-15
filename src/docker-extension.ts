@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { runner } from './runner';
 import { removeFirstItems, removeFirstItem } from './removeItem';
-import { getCallers, getDefaultCaller } from './configHandler';
+import { getCallers, getDefaultCaller } from './caller';
 
 const run = (): void => {
 	const forwardKeywords = [
