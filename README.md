@@ -12,7 +12,7 @@ npm install docker-extension -g
 
 Now you can use the default abbreviations. To edit the abbreviations, open the config file `docker-extension.json` which is located next to the docker-extension.js in the npm-global directory.
 
-> /path/to/the/npm-global/directory/`.config/docker-extension.json`
+> /path/to/the/npm-global/directory/`.config/docker-extension.json` (You can also use the extension specific commands for that)
 
 ## How does it work?
 
