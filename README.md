@@ -114,6 +114,18 @@ When you install the extension for the first time, this config will be created. 
 }
 ```
 
+## Extension specific commands
+
+The extension supports two extension specific functions.
+
+### dc extension get-config
+
+Prints the config location.
+
+### dc extension save-config \<file-path>
+
+Override the config with the given file.
+
 ## Future planes
 
 ### Update config
@@ -126,3 +138,15 @@ Sometimes you need to build an image more than once by hand, because it would co
 
 - remember a build command
 - add a rebuild command which uses the last build command 
+
+## Hint
+
+If you disable `showCommand`, you can stack commands within each other.
+
+Example:
+
+```bash
+dc rm -vf $(dc -aq)
+```
+
+> Removes all containers
