@@ -55,19 +55,25 @@ The following structure can also be found at `src/@types/config.d.ts`.
 ```js
 export interface Config {
     // show the resulting command before executing it
-    showCommand?: boolean;
-    // which command mapping is used if no command is provided (has to be the abbreviation)
-    default: string;
-    // the abbreviation is the property name
+	showCommand?: boolean;
+	// which command mapping is used if no command is provided (has to be the abbreviation)
+	default: string;
+	// the abbreviation is the property name
 	commandMappings: {
 		[commandMappings: string]: {
-            // the full command name
-            command: string;
-            // which action is executed by default (has to be any full action)
-            default: string;
-            // the fist value is the abbreviation and the second the full action
+			// the full command name
+			command: string;
+			// which action is executed by default (has to be any full action)
+			default: string;
+			// the fist value is the abbreviation and the second the full action
 			actionMappings: [string, string][];
 		};
+	};
+	// custom defined commands
+	customCommandMappings?: {
+		// The property name is the command name
+		// The value is a docker command with placeholders
+		[commandMapping: string]: string;
 	};
 }
 ```
@@ -110,6 +116,9 @@ When you install the extension for the first time, this config will be created. 
             actionMappings: [['p', 'prune'], 
                             ['i', 'inspect']]
 		}
+	},
+	customCommandMappings: {
+		bash: 'docker exec -it $1 /bin/bash'
 	}
 }
 ```
