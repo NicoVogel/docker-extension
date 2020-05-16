@@ -7,12 +7,12 @@ This project is a CLI to shorten the docker commands. You can define the abbrevi
 ## Getting Started
 
 ```bash
-npm install docker-extension -g
+npm install -g docker-extension
 ```
 
 Now you can use the default abbreviations. To edit the abbreviations, open the config file `docker-extension.json` which is located next to the docker-extension.js in the npm-global directory.
 
-> /path/to/the/npm-global/directory/`.config/docker-extension.json`
+> /path/to/the/npm-global/directory/`.config/docker-extension.json` (You can also use the extension specific commands for that)
 
 ## How does it work?
 
@@ -55,19 +55,25 @@ The following structure can also be found at `src/@types/config.d.ts`.
 ```js
 export interface Config {
     // show the resulting command before executing it
-    showCommand?: boolean;
-    // which command mapping is used if no command is provided (has to be the abbreviation)
-    default: string;
-    // the abbreviation is the property name
+	showCommand?: boolean;
+	// which command mapping is used if no command is provided (has to be the abbreviation)
+	default: string;
+	// the abbreviation is the property name
 	commandMappings: {
 		[commandMappings: string]: {
-            // the full command name
-            command: string;
-            // which action is executed by default (has to be any full action)
-            default: string;
-            // the fist value is the abbreviation and the second the full action
+			// the full command name
+			command: string;
+			// which action is executed by default (has to be any full action)
+			default: string;
+			// the fist value is the abbreviation and the second the full action
 			actionMappings: [string, string][];
 		};
+	};
+	// custom defined commands
+	customCommandMappings?: {
+		// The property name is the command name
+		// The value is a docker command with placeholders
+		[commandMapping: string]: string;
 	};
 }
 ```
@@ -110,9 +116,50 @@ When you install the extension for the first time, this config will be created. 
             actionMappings: [['p', 'prune'], 
                             ['i', 'inspect']]
 		}
+	},
+	customCommandMappings: {
+		bash: 'docker exec -it $0 /bin/bash'
 	}
 }
 ```
+## Hirarchy of execution
+
+There are several command types which could overlap. To resolve collisions the following hirarchy is used.
+
+1. Default docker commands
+2. The keyword for the extension specific commands (`extension`)
+3. The custom commands
+4. The abbriviations
+
+The default docker commands are:
+`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi`
+
+So if you define an abbriviation which has the same keyword as a custom command, then it will never be executed.
+
+## Extension specific commands
+
+The extension supports two extension specific functions.
+
+- `dc extension get-config` Prints the config location.
+- `dc extension save-config <file-path>` Override the config with the given file.
+
+## Custom Commands
+
+You can define custom commands which contain placeholders. These placeholders use the prefix `$` and start with number 0. Internally it uses `string.replace()`, so its rather simple. 
+
+The default config contains one example. `bash` is the keyword and `docker exec -it $0 /bin/bash` is the custom command with one placeholder
+
+## Hint
+
+If you disable `showCommand`, you can stack commands within each other.
+
+Example:
+
+```bash
+dc rm -vf $(dc -aq)
+```
+
+> Removes all containers
 
 ## Future planes
 
