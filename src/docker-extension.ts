@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 import { runner } from './runner';
 import { removeFirstItems, removeFirstItem } from './removeItem';
-import { getCallers, getDefaultCaller } from './caller';
+import { getCallers } from './caller';
 import { evalExtensionCommand } from './extensionCommands';
 
 const run = (): void => {
-
-	const extensionKeyword = 'extension'
+	const extensionKeyword = 'extension';
 
 	const forwardKeywords = [
 		'builder',
@@ -28,10 +27,10 @@ const run = (): void => {
 		'rmi'
 	];
 
-	const { callers, config } = getCallers();
-	const defaultCaller = getDefaultCaller(callers, config);
+	const { callers, defaultCaller, customCallers } = getCallers();
 	const args = removeFirstItems(process.argv, 2);
 
+	// no arguments present
 	if (args.length === 0) {
 		defaultCaller.invoke([]);
 		return;
@@ -46,11 +45,19 @@ const run = (): void => {
 		return;
 	}
 
-	// execute docker-extension specific commands 
+	// execute docker-extension specific commands
 	if (extensionKeyword === command) {
 		evalExtensionCommand(removeFirstItem(args), process.argv);
 		return;
 	}
+
+	// execute custom command
+	const selectCustomCommand = customCallers.get(command);
+	if (selectCustomCommand) {
+		selectCustomCommand.invoke(removeFirstItem(args));
+		return;
+	}
+
 
 	let selectCaller = callers.get(command);
 	let passArgs = args;

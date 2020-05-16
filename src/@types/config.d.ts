@@ -14,4 +14,10 @@ export interface Config {
 			actionMappings: [string, string][];
 		};
 	};
+	// custom defined commands
+	customCommandMappings?: {
+		// The property name is the command name
+		// The value is a docker command with placeholders
+		[commandMapping: string]: string;
+	};
 }

@@ -3,10 +3,10 @@ import { dirname, join } from 'path';
 import { defaultConfig } from './defaultConfig';
 import { Config } from './@types/config';
 
-
-
-export const configLocation = join(dirname(process.argv[1]),
-	'./.config/docker-extension.json')
+export const configLocation = join(
+	dirname(process.argv[1]),
+	'./.config/docker-extension.json'
+);
 
 const createConfigIfNotExists = (data: Config, path: string) => {
 	try {
@@ -17,27 +17,34 @@ const createConfigIfNotExists = (data: Config, path: string) => {
 			`Unable to write default config to location ${path}. Error message: ${err.message}`
 		);
 	}
-}
+};
 
 export const configWriter = (file: string, currentDirectory: string): void => {
-	const originLocation = file.startsWith('/') ? file : join(currentDirectory, file);
-	console.log(originLocation)
+	const originLocation = file.startsWith('/')
+		? file
+		: join(currentDirectory, file);
+	console.log(originLocation);
 	try {
 		if (existsSync(originLocation) === false) {
-			throw new Error(`the passed origin file path does not exist!, passed path: ${originLocation}`);
+			throw new Error(
+				`the passed origin file path does not exist!, passed path: ${originLocation}`
+			);
 		}
 		let readFileData;
 		try {
 			readFileData = JSON.parse(readFileSync(originLocation).toString());
 		} catch (err) {
-			throw new Error(`Problem while reading the config origin! ${err.message}`);
+			throw new Error(
+				`Problem while reading the config origin! ${err.message}`
+			);
 		}
 		createConfigIfNotExists(readFileData, configLocation);
-
 	} catch (err) {
-		console.error(`Problem while managing the config file! Fiel path: ${file}\nError: ${err.message}`);
+		console.error(
+			`Problem while managing the config file! Fiel path: ${file}\nError: ${err.message}`
+		);
 	}
-}
+};
 
 const configLoader = (): Config => {
 	try {
@@ -65,4 +72,4 @@ export const getConfig = (): Config => {
 		config = configLoader();
 	}
 	return config;
-}
+};
