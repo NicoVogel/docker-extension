@@ -24,7 +24,8 @@ export const customRunner = (command: string) => {
 		console.log(`-> ${command}`);
 	}
 	const child = spawn(command, {
-		stdio: 'inherit'
+		stdio: 'inherit',
+		shell: true
 	});
 	child.on('message', console.log);
 	child.on('error', console.error);
