@@ -16,5 +16,6 @@
 		"ms-vscode.vscode-typescript-tslint-plugin",
 		"streetsidesoftware.code-spell-checker",
 		"visualstudioexptteam.vscodeintellicode"
-	]
+	],
+	"postCreateCommand": "npm i -g np"
 }
