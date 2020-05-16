@@ -7,7 +7,7 @@ This project is a CLI to shorten the docker commands. You can define the abbrevi
 ## Getting Started
 
 ```bash
-npm install docker-extension -g
+npm install -g docker-extension
 ```
 
 Now you can use the default abbreviations. To edit the abbreviations, open the config file `docker-extension.json` which is located next to the docker-extension.js in the npm-global directory.
@@ -118,22 +118,48 @@ When you install the extension for the first time, this config will be created. 
 		}
 	},
 	customCommandMappings: {
-		bash: 'docker exec -it $1 /bin/bash'
+		bash: 'docker exec -it $0 /bin/bash'
 	}
 }
 ```
+## Hirarchy of execution
+
+There are several command types which could overlap. To resolve collisions the following hirarchy is used.
+
+1. Default docker commands
+2. The keyword for the extension specific commands (`extension`)
+3. The custom commands
+4. The abbriviations
+
+The default docker commands are:
+`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi`
+
+So if you define an abbriviation which has the same keyword as a custom command, then it will never be executed.
 
 ## Extension specific commands
 
 The extension supports two extension specific functions.
 
-### dc extension get-config
+- `dc extension get-config` Prints the config location.
+- `dc extension save-config <file-path>` Override the config with the given file.
 
-Prints the config location.
+## Custom Commands
 
-### dc extension save-config \<file-path>
+You can define custom commands which contain placeholders. These placeholders use the prefix `$` and start with number 0. Internally it uses `string.replace()`, so its rather simple. 
 
-Override the config with the given file.
+The default config contains one example. `bash` is the keyword and `docker exec -it $0 /bin/bash` is the custom command with one placeholder
+
+## Hint
+
+If you disable `showCommand`, you can stack commands within each other.
+
+Example:
+
+```bash
+dc rm -vf $(dc -aq)
+```
+
+> Removes all containers
 
 ## Future planes
 
@@ -147,15 +173,3 @@ Sometimes you need to build an image more than once by hand, because it would co
 
 - remember a build command
 - add a rebuild command which uses the last build command 
-
-## Hint
-
-If you disable `showCommand`, you can stack commands within each other.
-
-Example:
-
-```bash
-dc rm -vf $(dc -aq)
-```
-
-> Removes all containers
