@@ -58,7 +58,6 @@ const run = (): void => {
 		return;
 	}
 
-
 	let selectCaller = callers.get(command);
 	let passArgs = args;
 	if (selectCaller === undefined) {

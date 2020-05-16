@@ -29,4 +29,4 @@ export const customRunner = (command: string) => {
 	});
 	child.on('message', console.log);
 	child.on('error', console.error);
-}
+};
