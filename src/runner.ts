@@ -18,3 +18,14 @@ export const runner = (
 	child.on('message', console.log);
 	child.on('error', console.error);
 };
+
+export const customRunner = (command: string) => {
+	if (getConfig().showCommand) {
+		console.log(`-> ${command}`);
+	}
+	const child = spawn(command, {
+		stdio: 'inherit'
+	});
+	child.on('message', console.log);
+	child.on('error', console.error);
+}
