@@ -39,5 +39,8 @@ export const defaultConfig: Config = {
 				['i', 'inspect']
 			]
 		}
+	},
+	customCommandMappings: {
+		bash: 'docker exec -it $1 /bin/bash'
 	}
 };
