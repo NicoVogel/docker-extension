@@ -41,6 +41,6 @@ export const defaultConfig: Config = {
 		}
 	},
 	customCommandMappings: {
-		bash: 'docker exec -it $1 /bin/bash'
+		bash: 'docker exec -it $0 /bin/bash'
 	}
 };

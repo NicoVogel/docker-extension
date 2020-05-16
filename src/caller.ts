@@ -14,7 +14,7 @@ export class CustomCaller implements Call {
     invoke(args: string[]): void {
         const templateValues = {} as CustomCallerTemplate;
         for (let i = 0; i < args.length; i++) {
-            templateValues[`$${i + 1}`] = args[i];
+            templateValues[`$${i}`] = args[i];
         }
         const execCommand = this.template.replace(/\$\d/g, all =>
             templateValues[all] || all
