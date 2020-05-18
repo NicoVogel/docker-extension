@@ -15,12 +15,13 @@
   },
   "scripts": {
     "build": "tsc-bundle tsconfig.json --outFile dist/docker-extension.js",
-    "postbuild": "./postbuild.sh dist/docker-extension.js",
+    "postbuild": "npm run version",
     "start": "nodemon --watch src --exec npm run link",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
     "link": "npm run build && npm install -g",
-    "unlink": "npm uninstall -g"
+    "unlink": "npm uninstall -g",
+    "version": "./postbuild.sh dist/docker-extension.js"
   },
   "repository": {
     "type": "git",
