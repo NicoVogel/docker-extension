@@ -75,6 +75,8 @@ export interface Config {
 		// The value is a docker command with placeholders
 		[commandMapping: string]: string;
 	};
+	// open in editor command, needs to contain one placeholder $0 for the config gile path
+	openEditorCommand: string
 }
 ```
 
@@ -118,8 +120,11 @@ When you install the extension for the first time, this config will be created. 
 		}
 	},
 	customCommandMappings: {
-		bash: 'docker exec -it $0 /bin/bash'
-	}
+		bash: 'docker exec -it $0 /bin/bash',
+		rmdang: 'docker rmi $(docker images -f \'dangling=true\' -q)',
+		rmall: 'dc rm -v $(dc -aq)'
+	},
+	openEditorCommand: 'code $0'
 }
 ```
 ## Hirarchy of execution
@@ -142,12 +147,13 @@ The extension supports two extension specific functions.
 
 - `dc extension get-config` Prints the config location.
 - `dc extension save-config <file-path>` Override the config with the given file.
+- `dc extension edit` open config in configured editor (`config.openEditorCommand`)
 
 ## Custom Commands
 
 You can define custom commands which contain placeholders. These placeholders use the prefix `$` and start with number 0. Internally it uses `string.replace()`, so its rather simple. 
 
-The default config contains one example. `bash` is the keyword and `docker exec -it $0 /bin/bash` is the custom command with one placeholder
+The default config contains some handy examples. One example is `bash` which executes `docker exec -it $0 /bin/bash`. So if you use the command `dc bash bc45`, this will be translated to `docker exec -it bc45 /bin/bash`.
 
 ## Hint
 
