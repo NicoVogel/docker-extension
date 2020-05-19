@@ -21,5 +21,5 @@ export interface Config {
 		[commandMapping: string]: string;
 	};
 	// open in editor command, needs to contain one placeholder $0 for the config gile path
-	openEditorCommand: string
+	openEditorCommand: string;
 }

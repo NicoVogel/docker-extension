@@ -30,9 +30,12 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 	}
 
 	if (args[0] === 'edit') {
-		const openEditorCommand = getConfig().openEditorCommand.replace('$0', configLocation);
+		const openEditorCommand = getConfig().openEditorCommand.replace(
+			'$0',
+			configLocation
+		);
 		customRunner(openEditorCommand);
-		console.log('opening editor')
+		console.log('opening editor');
 		return;
 	}
 };
