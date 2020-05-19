@@ -75,7 +75,7 @@ export interface Config {
 		// The value is a docker command with placeholders
 		[commandMapping: string]: string;
 	};
-	// open in editor command, needs to contain one placeholder $0 for the config gile path
+	// open in editor command, needs to contain one placeholder $0 for the config file path
 	openEditorCommand: string
 }
 ```
@@ -121,8 +121,8 @@ When you install the extension for the first time, this config will be created. 
 	},
 	customCommandMappings: {
 		bash: 'docker exec -it $0 /bin/bash',
-		rmdang: 'docker rmi $(docker images -f \'dangling=true\' -q)',
-		rmall: 'dc rm -v $(dc -aq)'
+		rmdang: "docker rmi $(docker images -f 'dangling=true' -q)",
+		rmall: 'docker rm -v $(docker ps -aq)'
 	},
 	openEditorCommand: 'code $0'
 }
@@ -137,7 +137,7 @@ There are several command types which could overlap. To resolve collisions the f
 4. The abbriviations
 
 The default docker commands are:
-`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi`
+`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi, pull, build`
 
 So if you define an abbriviation which has the same keyword as a custom command, then it will never be executed.
 
@@ -145,9 +145,11 @@ So if you define an abbriviation which has the same keyword as a custom command,
 
 The extension supports two extension specific functions.
 
-- `dc extension get-config` Prints the config location.
-- `dc extension save-config <file-path>` Override the config with the given file.
+- `dc extension help` print help text
+- `dc extension get-config` prints the config location.
+- `dc extension save-config <file-path>` override the config with the given file.
 - `dc extension edit` open config in configured editor (`config.openEditorCommand`)
+- `dc extension version` print version number
 
 ## Custom Commands
 
