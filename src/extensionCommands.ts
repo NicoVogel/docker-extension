@@ -5,7 +5,7 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 	if (!args || args.length === 0 || args[0] === 'help') {
 		console.log(
 			`Docker Extension specific commands:
-    help:           show which commands are availiabe
+    help:           show which commands are available
     get-config:     get the config path
 	save-config:    override the config with a file:
 	edit:			open config in editor, can be configured in config
