@@ -41,6 +41,8 @@ export const defaultConfig: Config = {
 		}
 	},
 	customCommandMappings: {
-		bash: 'docker exec -it $0 /bin/bash'
+		bash: 'docker exec -it $0 /bin/bash',
+		rmdang: 'docker rmi $(docker images -f \'dangling=true\' -q)',
+		rmall: 'dc rm -v $(dc -aq)'
 	}
 };
