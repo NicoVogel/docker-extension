@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { runner } from './runner';
 import { removeFirstItems, removeFirstItem } from './removeItem';
 import { getCallers } from './caller';
