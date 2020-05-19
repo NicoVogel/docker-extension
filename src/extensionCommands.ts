@@ -9,6 +9,7 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
     get-config:     get the config path
 	save-config:    override the config with a file:
 	edit:			open config in editor, can be configured in config
+	version:		get the version number of the current build
 `
 		);
 		return;
@@ -33,6 +34,11 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 		const openEditorCommand = getConfig().openEditorCommand.replace('$0', configLocation);
 		customRunner(openEditorCommand);
 		console.log('opening editor')
+		return;
+	}
+
+	if (args[0] === 'version') {
+		console.log(`docker-extension version: ${__VERSION__}`);
 		return;
 	}
 };

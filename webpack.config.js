@@ -1,7 +1,7 @@
 'use strict';
 
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const { BannerPlugin } = require('webpack');
+const { BannerPlugin, DefinePlugin } = require('webpack');
 const path = require('path');
 
 const config = {
@@ -10,6 +10,9 @@ const config = {
     plugins: [
         new CleanWebpackPlugin(),
         new BannerPlugin({ banner: "#!/usr/bin/env node", raw: true }),
+        new DefinePlugin({
+            __VERSION__: JSON.stringify(process.env.npm_package_version),
+        }),
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
