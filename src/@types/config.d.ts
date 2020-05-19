@@ -20,4 +20,6 @@ export interface Config {
 		// The value is a docker command with placeholders
 		[commandMapping: string]: string;
 	};
+	// open in editor command, needs to contain one placeholder $0 for the config gile path
+	openEditorCommand: string
 }
