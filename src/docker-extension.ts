@@ -23,7 +23,9 @@ const run = (): void => {
 		'system',
 		'trust',
 		'volume',
-		'rmi'
+		'rmi',
+		'pull',
+		'build'
 	];
 
 	const { callers, defaultCaller, customCallers } = getCallers();
