@@ -75,6 +75,8 @@ export interface Config {
 		// The value is a docker command with placeholders
 		[commandMapping: string]: string;
 	};
+	// open in editor command, needs to contain one placeholder $0 for the config file path
+	openEditorCommand: string
 }
 ```
 
@@ -118,8 +120,11 @@ When you install the extension for the first time, this config will be created. 
 		}
 	},
 	customCommandMappings: {
-		bash: 'docker exec -it $0 /bin/bash'
-	}
+		bash: 'docker exec -it $0 /bin/bash',
+		rmdang: "docker rmi $(docker images -f 'dangling=true' -q)",
+		rmall: 'docker rm -v $(docker ps -aq)'
+	},
+	openEditorCommand: 'code $0'
 }
 ```
 ## Hirarchy of execution
@@ -132,7 +137,7 @@ There are several command types which could overlap. To resolve collisions the f
 4. The abbriviations
 
 The default docker commands are:
-`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi`
+`builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi, pull, build`
 
 So if you define an abbriviation which has the same keyword as a custom command, then it will never be executed.
 
@@ -140,14 +145,17 @@ So if you define an abbriviation which has the same keyword as a custom command,
 
 The extension supports two extension specific functions.
 
-- `dc extension get-config` Prints the config location.
-- `dc extension save-config <file-path>` Override the config with the given file.
+- `dc extension help` print help text
+- `dc extension get-config` prints the config location.
+- `dc extension save-config <file-path>` override the config with the given file.
+- `dc extension edit` open config in configured editor (`config.openEditorCommand`)
+- `dc extension version` print version number
 
 ## Custom Commands
 
 You can define custom commands which contain placeholders. These placeholders use the prefix `$` and start with number 0. Internally it uses `string.replace()`, so its rather simple. 
 
-The default config contains one example. `bash` is the keyword and `docker exec -it $0 /bin/bash` is the custom command with one placeholder
+The default config contains some handy examples. One example is `bash` which executes `docker exec -it $0 /bin/bash`. So if you use the command `dc bash bc45`, this will be translated to `docker exec -it bc45 /bin/bash`.
 
 ## Hint
 

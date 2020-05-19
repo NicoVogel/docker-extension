@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { runner } from './runner';
 import { removeFirstItems, removeFirstItem } from './removeItem';
 import { getCallers } from './caller';
@@ -24,7 +23,9 @@ const run = (): void => {
 		'system',
 		'trust',
 		'volume',
-		'rmi'
+		'rmi',
+		'pull',
+		'build'
 	];
 
 	const { callers, defaultCaller, customCallers } = getCallers();

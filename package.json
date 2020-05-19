@@ -14,8 +14,7 @@
     "docker-extension": "./dist/docker-extension.js"
   },
   "scripts": {
-    "build": "tsc-bundle tsconfig.json --outFile dist/docker-extension.js",
-    "postbuild": "./postbuild.sh dist/docker-extension.js",
+    "build": "webpack --mode production",
     "start": "nodemon --watch src --exec npm run link",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint src/**/*",
@@ -37,10 +36,13 @@
     "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
     "@typescript-eslint/parser": "^2.0.0",
+    "clean-webpack-plugin": "^3.0.0",
     "eslint": "^6.3.0",
     "nodemon": "^1.19.1",
     "prettier": "^1.18.2",
+    "ts-loader": "^7.0.4",
     "typescript": "^3.5.3",
-    "typescript-bundle": "^1.0.16"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11"
   }
 }
