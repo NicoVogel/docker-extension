@@ -1,4 +1,5 @@
-import { configLocation, configWriter } from './configHandler';
+import { configLocation, configWriter, getConfig } from './configHandler';
+import { customRunner } from './runner';
 
 export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 	if (!args || args.length === 0 || args[0] === 'help') {
@@ -6,7 +7,8 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 			`Docker Extension specific commands:
     help:           show which commands are availiabe
     get-config:     get the config path
-    save-config:    override the config with a file
+	save-config:    override the config with a file:
+	edit:			open config in editor, can be configured in config
 `
 		);
 		return;
@@ -24,6 +26,13 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 			);
 		}
 		configWriter(args[1], process.cwd());
+		return;
+	}
+
+	if (args[0] === 'edit') {
+		const openEditorCommand = getConfig().openEditorCommand.replace('$0', configLocation);
+		customRunner(openEditorCommand);
+		console.log('opening editor')
 		return;
 	}
 };
