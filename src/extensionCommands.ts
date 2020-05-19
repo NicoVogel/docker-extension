@@ -1,8 +1,9 @@
 import { configLocation, configWriter, getConfig } from './configHandler';
 import { customRunner } from './runner';
 
-const helpLog = () => console.log(
-	`Docker Extension specific commands:
+const helpLog = () =>
+	console.log(
+		`Docker Extension specific commands:
 
 	help:           show which commands are available
 	get-config:     get the config path
@@ -10,16 +11,14 @@ const helpLog = () => console.log(
 	edit:			open config in editor, can be configured in config
 	version:		get the version number of the current build
 `
-);
+	);
 
 const saveConfig = (args: string[]) => {
 	if (args.length === 1) {
-		console.log(
-			'You need to specify a file which will be used as new config'
-		);
+		console.log('You need to specify a file which will be used as new config');
 	}
 	configWriter(args[1], process.cwd());
-}
+};
 
 const editConfig = () => {
 	const openEditorCommand = getConfig().openEditorCommand.replace(
@@ -28,7 +27,7 @@ const editConfig = () => {
 	);
 	customRunner(openEditorCommand);
 	console.log('opening editor');
-}
+};
 
 export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 	if (!args || args.length === 0) {
@@ -44,7 +43,7 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 			console.log(configLocation);
 			break;
 		case 'save-config':
-			saveConfig(args)
+			saveConfig(args);
 			break;
 		case 'edit':
 			editConfig();
@@ -57,5 +56,4 @@ export const evalExtensionCommand = (args: string[], processArgs: string[]) => {
 			helpLog();
 			break;
 	}
-
 };
