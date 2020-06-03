@@ -43,7 +43,8 @@ export const defaultConfig: Config = {
 	customCommandMappings: {
 		bash: 'docker exec -it $0 /bin/bash',
 		rmdang: "docker rmi $(docker images -f 'dangling=true' -q)",
-		rmall: 'docker rm -v $(docker ps -aq)'
+		rmall: 'docker rm -v $(docker ps -aq)',
+    		rmselect: 'docker images | grep $0 | awk \'{ print $3; }\' | xargs docker rmi'
 	},
 	openEditorCommand: 'code $0'
 };
