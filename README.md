@@ -181,3 +181,19 @@ Sometimes you need to build an image more than once by hand, because it would co
 
 - remember a build command
 - add a rebuild command which uses the last build command 
+
+
+## Known issus
+
+If you are not a root user, then the creation of the config is prohibited.
+You will get an error like:
+
+````bash
+Problem while managing the config file! Unable to write default config to location /usr/bin/.config/docker-extension.json. Error message: EACCES: permission denied, mkdir '/usr/bin/.config'
+```
+
+use the following command to fix this.
+
+```bash
+sudo mkdir /usr/bin/.config && sudo chmod 777 /usr/bin/.config
+```
