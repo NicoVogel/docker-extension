@@ -127,19 +127,19 @@ When you install the extension for the first time, this config will be created. 
 	openEditorCommand: 'code $0'
 }
 ```
-## Hirarchy of execution
+## Hierarchy of execution
 
-There are several command types which could overlap. To resolve collisions the following hirarchy is used.
+There are several command types which could overlap. To resolve collisions the following hierarchy is used.
 
 1. Default docker commands
 2. The keyword for the extension specific commands (`extension`)
 3. The custom commands
-4. The abbriviations
+4. The abbreviations
 
 The default docker commands are:
 `builder, config, container, context, image, images, network, node, plugin, secret, service, stack, swarm, system, trust, volume, rmi, pull, build`
 
-So if you define an abbriviation which has the same keyword as a custom command, then it will never be executed.
+So if you define an abbreviation which has the same keyword as a custom command, then it will never be executed.
 
 ## Extension specific commands
 
@@ -169,11 +169,7 @@ dc rm -vf $(dc -aq)
 
 > Removes all containers
 
-## Future planes
-
-### Update config
-
-It's no fun to navigate to the config file. Therefore, a better approach is needed. The current idea is to include a command which allows you to override the given config with another config.
+## Future plans
 
 ### Custom build command
 
