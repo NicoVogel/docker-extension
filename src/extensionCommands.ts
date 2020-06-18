@@ -1,5 +1,5 @@
-import { configLocation, configWriter, getConfig } from './configHandler';
-import { customRunner } from './runner';
+import * as open from 'open';
+import { configLocation, configWriter } from './configHandler';
 
 const helpLog = () =>
 	console.log(
@@ -21,12 +21,8 @@ const saveConfig = (args: string[]) => {
 };
 
 const editConfig = () => {
-	const openEditorCommand = getConfig().openEditorCommand.replace(
-		'$0',
-		configLocation
-	);
-	customRunner(openEditorCommand);
-	console.log('opening editor');
+	open(configLocation);
+	console.log('Opening editor');
 };
 
 export const evalExtensionCommand = (args: string[], processArgs: string[]) => {

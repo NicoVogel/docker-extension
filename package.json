@@ -32,7 +32,9 @@
     "url": "https://github.com/NicoVogel/docker_extension/issues"
   },
   "homepage": "https://github.com/NicoVogel/docker_extension#readme",
-  "dependencies": {},
+  "dependencies": {
+    "open": "^7.0.4"
+  },
   "devDependencies": {
     "@types/node": "^12.7.1",
     "@typescript-eslint/eslint-plugin": "^2.0.0",
