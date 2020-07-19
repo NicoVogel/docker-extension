@@ -54,27 +54,27 @@ The following structure can also be found at `src/@types/config.d.ts`.
 
 ```js
 export interface Config {
-    // show the resulting command before executing it
-	showCommand?: boolean;
-	// which command mapping is used if no command is provided (has to be the abbreviation)
-	default: string;
-	// the abbreviation is the property name
-	commandMappings: {
-		[commandMappings: string]: {
-			// the full command name
-			command: string;
-			// which action is executed by default (has to be any full action)
-			default: string;
-			// the fist value is the abbreviation and the second the full action
-			actionMappings: [string, string][];
-		};
-	};
-	// custom defined commands
-	customCommandMappings?: {
-		// The property name is the command name
-		// The value is a docker command with placeholders
-		[commandMapping: string]: string;
-	};
+  // show the resulting command before executing it
+  showCommand?: boolean;
+  // which command mapping is used if no command is provided (has to be the abbreviation)
+  default: string;
+  // the abbreviation is the property name
+  commandMappings: {
+    [commandMappings: string]: {
+      // the full command name
+      command: string;
+      // which action is executed by default (has to be any full action)
+      default: string;
+      // the fist value is the abbreviation and the second the full action
+      actionMappings: [string, string][];
+    };
+  };
+  // custom defined commands
+  customCommandMappings?: {
+    // The property name is the command name
+    // The value is a docker command with placeholders
+    [commandMapping: string]: string;
+  };
 }
 ```
 
@@ -84,44 +84,51 @@ When you install the extension for the first time, this config will be created. 
 
 ```js
 {
-	showCommand: true,
-	default: 'c',
-	commandMappings: {
-		c: {
-			command: 'container',
-			default: 'ps',
-            actionMappings: [['p', 'prune'], 
-                            ['e', 'exec'], 
-                            ['i', 'inspect']]
-		},
-		i: {
-			command: 'image',
-			default: 'ls',
-			actionMappings: [
-				['h', 'history'],
-				['i', 'inspect'],
-				['p', 'prune'],
-				['b', 'build']
-			]
-		},
-		n: {
-			command: 'network',
-			default: 'ls',
-            actionMappings: [['p', 'prune'], 
-                            ['i', 'inspect']]
-		},
-		v: {
-			command: 'volume',
-			default: 'ls',
-            actionMappings: [['p', 'prune'], 
-                            ['i', 'inspect']]
-		}
-	},
-	customCommandMappings: {
-		bash: 'docker exec -it $0 /bin/bash',
-		rmdang: "docker rmi $(docker images -f 'dangling=true' -q)",
-		rmall: 'docker rm -v $(docker ps -aq)'
-	}
+  showCommand: true,
+  default: "c",
+  commandMappings: {
+    c: {
+      command: "container",
+      default: "ps",
+      actionMappings: [
+        ["p", "prune"],
+        ["e", "exec"],
+        ["i", "inspect"]
+      ]
+    },
+    i: {
+      command: "image",
+      default: "ls",
+      actionMappings: [
+        ["h", "history"],
+        ["i", "inspect"],
+        ["p", "prune"],
+        ["b", "build"]
+      ]
+    },
+    n: {
+      command: "network",
+      default: "ls",
+      actionMappings: [
+        ["p", "prune"],
+        ["i", "inspect"]
+      ]
+    },
+    v: {
+      command: "volume",
+      default: "ls",
+      actionMappings: [
+        ["p", "prune"],
+        ["i", "inspect"]
+      ]
+    }
+  },
+  customCommandMappings: {
+    bash: "docker exec -it $0 /bin/bash",
+    rmdang: "docker rmi $(docker images -f 'dangling=true' -q)",
+    rmall: "docker rm -v $(docker ps -aq)",
+    rmselect: "docker images | grep $0 | awk '{ print $3; }' | xargs docker rmi"
+  }
 }
 ```
 ## Hierarchy of execution
@@ -181,11 +188,11 @@ Sometimes you need to build an image more than once by hand, because it would co
 If you are not a root user, then the creation of the config is prohibited.
 You will get an error like:
 
-````bash
+```bash
 Problem while managing the config file! Unable to write default config to location /usr/bin/.config/docker-extension.json. Error message: EACCES: permission denied, mkdir '/usr/bin/.config'
 ```
 
-use the following command to fix this.
+Use the following command to fix this.
 
 ```bash
 sudo mkdir /usr/bin/.config && sudo chmod 777 /usr/bin/.config
