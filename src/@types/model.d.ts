@@ -1,3 +1,3 @@
 export interface Call {
-	invoke(args: string[]): void;
+  invoke(args: string[]): void;
 }
